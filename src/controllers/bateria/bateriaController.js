@@ -1,0 +1,110 @@
+/* eslint-disable no-unused-vars */
+const WebSocket = require('ws');
+const Bateria = require('@/models/Bateria.js');
+
+// Controller para manipular as operações CRUD relacionadas aos baterias
+const bateriaController = {
+  // Retorna todos os baterias
+  async getAll(req, res) {
+    try {
+      const baterias = await Bateria.find();
+      res.json(baterias);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  
+  // Cria um novo bateria
+  async create(req, res) {
+    const { idEvento, idCategoria, sequencia, descricao, round, status, avanca } = req.body;
+    try {
+      
+      const bateria  = await this.createRegistro(idEvento, idCategoria, sequencia, descricao, round, status, avanca);
+
+      res.status(201).json(bateria);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },      
+  async createRegistro(idEvento, idCategoria, sequencia, descricao, round, status, avanca) {
+    try {
+      const bateria = new Bateria({
+        idEvento,
+        idCategoria,
+        sequencia,
+        descricao,
+        round,
+        status,
+        avanca
+      });
+      await bateria.save();
+
+      return bateria;
+      
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  async atualizarBateria(req, res) {
+
+    const { id } = req.params;
+    const novosDadosBateria = req.body; // Novos dados do bateria a serem atualizados
+
+    try {
+
+      // Verifique se o bateria com o ID fornecido existe
+      const bateriaExistente = await Bateria.findById(id);
+
+      if (!bateriaExistente) {
+        return res.status(404).json({ error: "Bateria não encontrado." });
+      }
+
+      // Atualize o bateria com os novos dados
+      await Bateria.findByIdAndUpdate(id, novosDadosBateria);
+
+      // Retorna o bateria atualizado como resposta
+      const bateriaAtualizado = await Bateria.findById(id);
+      res.json(bateriaAtualizado);
+    } catch (error) {
+      // Retorna um erro em caso de falha na atualização
+      res.status(500).json({ error: "Erro ao atualizar bateria." });
+    }
+  },
+  // Retorna um Bateria por atributo
+  async getByAttribute(req, res) {
+    const atributos = req.params.atributos.split("/");
+
+    try {
+      // Construa um objeto de filtro com base nos atributos fornecidos
+      const filtro = {};
+      atributos.forEach((atributo) => {
+        const [chave, valor] = atributo.split("=");
+        filtro[chave] = valor;
+      });
+
+      // Consulte baterias com base no filtro construído
+      const baterias = await Bateria.find(filtro);
+
+      // Retorna os baterias encontrados como resposta
+      res.json(baterias);
+    } catch (error) {
+      // Retorna um erro em caso de falha na consulta
+      res.status(500).json({ error: "Erro ao buscar baterias." });
+    }
+  },
+
+
+  // Remove um Bateria
+  async remove(req, res) {
+    const { id } = req.params;
+    try {
+      await Bateria.findByIdAndDelete(id);
+      res.json({ success: true, message: "Bateria removido com sucesso" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+};
+
+module.exports = bateriaController;

@@ -22,3 +22,11 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+mongod --replSet rs0 \
+       --port 27017 \
+       --dbpath /path/to/your/mongodb/dataDirectory \
+       --authenticationDatabase "admin" \
+       --username "datamongo" \
+       --password
