@@ -1,85 +1,141 @@
 /* eslint-disable no-unused-vars */
 const WebSocket = require('ws');
-const Usuario = require('../../models/Usuario.js');
+const Atleta = require('../../models/Atleta.js');
 
-// Controller para manipular as operações CRUD relacionadas aos usuarios
-const usuarioController = {
-  // Retorna todos os usuarios
+// Controller para manipular as operações CRUD relacionadas aos atletas
+const atletaController = {
+  // Retorna todos os atletas
   async getAll(req, res) {
     try {
-      const usuarios = await Usuario.find();
-      res.json(usuarios);
+      const atletas = await Atleta.find();
+      res.json(atletas);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
   async create(req, res) {
-    const { idEvento,nome, login, email, telefone, tipo, senha, ativo } = req.body;
+    const {
+      idEvento,
+      nome,
+      apelidio,
+      email,
+      telefone,
+      cpf,
+      dataNascimento,
+      cep,
+      endereco,
+      numero,
+      complemento,
+      bairro,
+      cidade,
+      uf,
+      rankNordestino,
+      rankEstadual,
+      idadeAno,
+      cabecaChave
+    } = req.body;
     try {
       
-      const usuario = new Usuario({
+      const atleta = new Atleta({
         idEvento,
         nome,
-        login,
+        apelidio,
         email,
         telefone,
-        tipo,
-        senha,
-        ativo
+        cpf,
+        dataNascimento,
+        cep,
+        endereco,
+        numero,
+        complemento,
+        bairro,
+        cidade,
+        uf,
+        rankNordestino,
+        rankEstadual,
+        idadeAno,
+        cabecaChave
       });
-      await usuario.save();
 
-      res.status(201).json(usuario);
+      const novoAtleta = await atleta.save();
+      
+      res.status(201).json(novoAtleta);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   },
-  async createRegister(idEvento,nome, login, email, telefone, tipo, senha, ativo) {
-
+  async createRegister(
+    idEvento,
+    nome,
+    apelidio,
+    email,
+    telefone,
+    cpf,
+    dataNascimento,
+    cep,
+    endereco,
+    numero,
+    complemento,
+    bairro,
+    cidade,
+    uf,
+    rankNordestino,
+    rankEstadual,
+    idadeAno,
+    cabecaChave
+  ) {
     try {
-      const usuario = new Usuario({
+      const atleta = new Atleta({
         idEvento,
         nome,
-        login,
+        apelidio,
         email,
         telefone,
-        tipo,
-        senha,
-        ativo
+        cpf,
+        dataNascimento,
+        cep,
+        endereco,
+        numero,
+        complemento,
+        bairro,
+        cidade,
+        uf,
+        rankNordestino,
+        rankEstadual,
+        idadeAno,
+        cabecaChave
       });
-      await usuario.save();
+      await atleta.save();
 
-      return usuario;
+      return atleta;
     } catch (error) {
       throw new Error(error.message);
     }
   },
-  async atualizarUsuario(req, res) {
-
+  async atualizarAtleta(req, res) {
     const { id } = req.params;
-    const novosDadosUsuario = req.body; // Novos dados do usuário a serem atualizados
+    const novosDadosAtleta = req.body; // Novos dados do usuário a serem atualizados
 
     try {
-
       // Verifique se o usuário com o ID fornecido existe
-      const usuarioExistente = await Usuario.findById(id);
+      const atletaExistente = await Atleta.findById(id);
 
-      if (!usuarioExistente) {
+      if (!atletaExistente) {
         return res.status(404).json({ error: "Usuário não encontrado." });
       }
 
       // Atualize o usuário com os novos dados
-      await Usuario.findByIdAndUpdate(id, novosDadosUsuario);
+      await Atleta.findByIdAndUpdate(id, novosDadosAtleta);
 
       // Retorna o usuário atualizado como resposta
-      const usuarioAtualizado = await Usuario.findById(id);
-      res.json(usuarioAtualizado);
+      const atletaAtualizado = await Atleta.findById(id);
+      res.json(atletaAtualizado);
     } catch (error) {
       // Retorna um erro em caso de falha na atualização
       res.status(500).json({ error: "Erro ao atualizar usuário." });
     }
   },
-  // Retorna um Usuario por atributo
+  // Retorna um Atleta por atributo
   async getByAttribute(req, res) {
     const atributos = req.params.atributos.split("/");
 
@@ -92,10 +148,10 @@ const usuarioController = {
       });
 
       // Consulte usuários com base no filtro construído
-      const usuarios = await Usuario.find(filtro);
+      const atletas = await Atleta.find(filtro);
 
       // Retorna os usuários encontrados como resposta
-      res.json(usuarios);
+      res.json(atletas);
     } catch (error) {
       // Retorna um erro em caso de falha na consulta
       res.status(500).json({ error: "Erro ao buscar usuários." });
@@ -107,9 +163,9 @@ const usuarioController = {
     try {
       // Aqui você faria a verificação no banco de dados se o login e senha correspondem a algum registro
       // Este é apenas um exemplo simplificado
-      const usuario = await Usuario.find({ login: login, senha: senha });
-      if (usuario.length != 0) {
-        res.json(usuario[0]);
+      const atleta = await Atleta.find({ login: login, senha: senha });
+      if (atleta.length != 0) {
+        res.json(atleta[0]);
       } else {
         res
           .status(401)
@@ -120,12 +176,12 @@ const usuarioController = {
     }
   },
 
-  // Remove um Usuario
+  // Remove um Atleta
   async remove(req, res) {
     const { id } = req.params;
     try {
-      await Usuario.findByIdAndDelete(id);
-      res.json({ success: true, message: "Usuario removido com sucesso" });
+      await Atleta.findByIdAndDelete(id);
+      res.json({ success: true, message: "Atleta removido com sucesso" });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -134,7 +190,7 @@ const usuarioController = {
     const filtro = { [atributo]: valor };
 
     // Remover registros que correspondem ao filtro
-    await Usuario.deleteMany(filtro)
+    await Atleta.deleteMany(filtro)
       .then((result) => {
         console.log(`${result.deletedCount} registros removidos`);
       })
@@ -144,4 +200,4 @@ const usuarioController = {
   },
 };
 
-module.exports = usuarioController;
+module.exports = atletaController;

@@ -6,7 +6,7 @@ const eventoSchema = new mongoose.Schema({
         local     : String,
         dataInicio: Date,
         dataFinal : Date,
-        status    : String,
+        status    : String
 });
 
 const Evento = mongoose.model('Evento', eventoSchema);

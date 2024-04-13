@@ -17,7 +17,8 @@ const atletaSchema = new mongoose.Schema({
        uf      : String,
        rankNordestino: Number,
        rankEstadual: Number,
-       idadeAno: Number
+       idadeAno: Number,
+       cabecaChave: Boolean,
 })
   
 const Atleta = mongoose.model('Atleta', atletaSchema);

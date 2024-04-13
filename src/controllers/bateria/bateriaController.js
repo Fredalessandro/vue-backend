@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const WebSocket = require('ws');
-const Bateria = require('@/models/Bateria.js');
+const Bateria = require('../../models/Bateria.js');
 
 // Controller para manipular as operações CRUD relacionadas aos baterias
 const bateriaController = {
@@ -19,21 +19,34 @@ const bateriaController = {
     const { idEvento, idCategoria, sequencia, descricao, round, status, avanca } = req.body;
     try {
       
-      const bateria  = await this.createRegistro(idEvento, idCategoria, sequencia, descricao, round, status, avanca);
-
-      res.status(201).json(bateria);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },      
-  async createRegistro(idEvento, idCategoria, sequencia, descricao, round, status, avanca) {
-    try {
       const bateria = new Bateria({
         idEvento,
         idCategoria,
         sequencia,
         descricao,
         round,
+        status,
+        avanca
+      });
+      
+      const noovaBateria = await bateria.save();
+      
+      res.status(201).json(noovaBateria);
+
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  },      
+  async createRegistro(idEvento, idCategoria, sequencia, descricao, seqBateria, round, seqRound, status, avanca) {
+    try {
+      const bateria = new Bateria({
+        idEvento,
+        idCategoria,
+        sequencia,
+        descricao,
+        seqBateria,
+        round,
+        seqRound,
         status,
         avanca
       });
@@ -94,7 +107,6 @@ const bateriaController = {
     }
   },
 
-
   // Remove um Bateria
   async remove(req, res) {
     const { id } = req.params;
@@ -105,6 +117,47 @@ const bateriaController = {
       res.status(500).json({ error: error.message });
     }
   },
+  async removeRegisters(atributo, valor) {
+    const filtro = { [atributo]: valor };
+
+    // Remover registros que correspondem ao filtro
+    await Bateria.deleteMany(filtro)
+      .then((result) => {
+        console.log(`${result.deletedCount} registros removidos`);
+      })
+      .catch((err) => {
+        console.error("Erro ao remover registros:", err);
+      });
+  },
+  async gerarBaterias(idEvento, idCategoria, atletasPorBateria, atletas) {
+    
+    const baterias = [];
+    let totalBaterias = Math.ceil(atletas / atletasPorBateria);
+    let strRound = 1;
+    let sequencia = 1;
+    while (totalBaterias>=1) {
+      console.log("Quantidade baterias " + totalBaterias);
+      for (let i = 0; i < totalBaterias; i++) {
+
+        this.createRegistro(idEvento, idCategoria, sequencia, i + 1 + "ª bateria do ", i + 1, strRound+" Round", strRound, "Aguardando", 2)
+       
+        ++sequencia;
+      }
+
+      if (totalBaterias!=1){
+        strRound++
+        totalBaterias = Math.ceil((atletas/strRound) / atletasPorBateria);
+      } else {
+        totalBaterias = 0;
+      }
+
+    }
+    
+    // Distribui os atletas em baterias
+    //return baterias;
+
+  }  
+
 };
 
 module.exports = bateriaController;

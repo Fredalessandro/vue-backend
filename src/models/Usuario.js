@@ -7,6 +7,7 @@ const usuarioSchema = new mongoose.Schema({
   email: String,
   telefone: String,
   tipo: String,
+  perfil: String,
   senha: String,
   ativo: Boolean,
 });

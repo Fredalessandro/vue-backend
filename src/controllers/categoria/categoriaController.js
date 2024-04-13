@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const WebSocket = require('ws');
-const Categoria = require('@/models/Categoria.js');
+const Categoria = require('../../models/Categoria.js');
+const bateriaController = require('../bateria/bateriaController');
 
 // Controller para manipular as operações CRUD relacionadas aos categorias
 const categoriaController = {
@@ -13,20 +14,8 @@ const categoriaController = {
       res.status(500).json({ error: error.message });
     }
   },
-
-  // Cria um novo categoria
-  async create(req, res) {
-    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas } = req.body;
-    try {
-      
-      const categoria  = await this.createRegistro(idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas);
-
-      res.status(201).json(categoria);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  },      
-  async createRegistro(idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas) {
+  // Cria um novo categoria pela api
+  async createRegistro(idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas)  {
     try {
       const categoria = new Categoria({
         idUsuario         ,
@@ -38,15 +27,39 @@ const categoriaController = {
         qtdAtletasBateria ,
         qtdAtletas
       });
-      await categoria.save();
+      const novaCategoria = await categoria.save();
 
-      return categoria;
+      await bateriaController.gerarBaterias(novaCategoria.idEvento, novaCategoria._id, novaCategoria.qtdAtletasBateria, novaCategoria.qtdAtletas);
+
+      return novaCategoria;
       
     } catch (error) {
       throw new Error(error.message);
     }
   },
+  // Cria um novo categoria pelo browser
+  async create(req, res) {
+    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas } = req.body;
+    try {
+      const categoria = new Categoria({
+        idUsuario         ,
+        idEvento          ,
+        descricao         ,
+        idade             ,
+        regra             ,
+        valorInscricao    ,
+        qtdAtletasBateria ,
+        qtdAtletas
+      });
+      const novaCategoria = await categoria.save();
 
+      await bateriaController.gerarBaterias(novaCategoria.idEvento, novaCategoria._id, novaCategoria.qtdAtletasBateria, novaCategoria.qtdAtletas);
+
+      res.status(201).json(novaCategoria);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }, 
   async atualizarCategoria(req, res) {
 
     const { id } = req.params;
@@ -83,9 +96,9 @@ const categoriaController = {
         const [chave, valor] = atributo.split("=");
         filtro[chave] = valor;
       });
-
+      const opcaoOrdenacao = { descricao: 1 };
       // Consulte categorias com base no filtro construído
-      const categorias = await Categoria.find(filtro);
+      const categorias = await Categoria.find(filtro).sort(opcaoOrdenacao);
 
       // Retorna os categorias encontrados como resposta
       res.json(categorias);
@@ -94,8 +107,6 @@ const categoriaController = {
       res.status(500).json({ error: "Erro ao buscar categorias." });
     }
   },
-
-
   // Remove um Categoria
   async remove(req, res) {
     const { id } = req.params;
@@ -106,6 +117,18 @@ const categoriaController = {
       res.status(500).json({ error: error.message });
     }
   },
-};
+  async removeRegisters(atributo, valor) {
+    const filtro = { [atributo]: valor };
+
+    // Remover registros que correspondem ao filtro
+    await Categoria.deleteMany(filtro)
+      .then((result) => {
+        console.log(`${result.deletedCount} registros removidos`);
+      })
+      .catch((err) => {
+        console.error("Erro ao remover registros:", err);
+      });
+  },
+}
 
 module.exports = categoriaController;

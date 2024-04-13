@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
 
-const atletaSchema = new mongoose.Schema({
+const bateriaSchema = new mongoose.Schema({
 
        idEvento     : String,
        idCategoria  : String,
        sequencia    : Number,
        descricao    : String,
+       seqBateria   : Number,
        round        : String,
+       seqRound     : Number,
        status       : String,
        avanca       : Number,
    
 
 })
 
-const Atleta = mongoose.model('Atleta', atletaSchema);
+const Bateria = mongoose.model('Bateria', bateriaSchema);
 
-module.exports = Atleta;
+module.exports = Bateria;
