@@ -6,7 +6,11 @@ const eventoSchema = new mongoose.Schema({
         local     : String,
         dataInicio: Date,
         dataFinal : Date,
-        status    : String
+        status    : String,
+        valorInscricao    : Number,
+        qtdAtletasBateria : Number,
+        qtdOndaSurfada    : Number,
+        tempoBateria      : Number
 });
 
 const Evento = mongoose.model('Evento', eventoSchema);

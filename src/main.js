@@ -19,7 +19,7 @@ db.once('open', () => {
 });
 
 app.get('/usuarios', usuarioController.getAll);
-app.post('/usuarios/filtrados', usuarioController.getByAttribute);
+app.get('/usuarios/:atributos', usuarioController.getByAttribute);
 app.post('/usuarios', usuarioController.create);
 app.put('/usuarios/:id',usuarioController.atualizarUsuario);
 app.post('/login', usuarioController.checkLogin);

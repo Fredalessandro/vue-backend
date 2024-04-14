@@ -8,7 +8,11 @@ const categoriaSchema = new mongoose.Schema({
         regra             : String,
         valorInscricao    : Number,
         qtdAtletasBateria : Number,
-        qtdAtletas        : Number
+        qtdAtletas        : Number,
+        qtdOndaBateria    : Number,
+        tempoBateria      : Number,
+        dataHoraInicio    : Date,
+        dataHoraFinal     : Date,
 });
 
 const Categoria = mongoose.model('Categoria', categoriaSchema);
