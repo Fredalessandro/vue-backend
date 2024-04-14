@@ -29,7 +29,7 @@ const categoriaController = {
       });
       const novaCategoria = await categoria.save();
 
-      await bateriaController.gerarBaterias(novaCategoria.idEvento, novaCategoria._id, novaCategoria.qtdAtletasBateria, novaCategoria.qtdAtletas);
+      //await bateriaController.gerarBaterias(novaCategoria.idEvento, novaCategoria._id, novaCategoria.qtdAtletasBateria, novaCategoria.qtdAtletas);
 
       return novaCategoria;
       
@@ -53,13 +53,14 @@ const categoriaController = {
       });
       const novaCategoria = await categoria.save();
 
-      await bateriaController.gerarBaterias(novaCategoria.idEvento, novaCategoria._id, novaCategoria.qtdAtletasBateria, novaCategoria.qtdAtletas);
+      //await bateriaController.gerarBaterias(novaCategoria.idEvento, novaCategoria._id, novaCategoria.qtdAtletasBateria, novaCategoria.qtdAtletas);
 
       res.status(201).json(novaCategoria);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   }, 
+
   async atualizarCategoria(req, res) {
 
     const { id } = req.params;

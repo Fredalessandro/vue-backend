@@ -129,24 +129,37 @@ const bateriaController = {
         console.error("Erro ao remover registros:", err);
       });
   },
-  async gerarBaterias(idEvento, idCategoria, atletasPorBateria, atletas) {
+  async gerarBaterias(req, res) {
+    
+    const { idEvento, idCategoria, qtdAtletasBateria, qtdAtletas } = req.body;
+    
+    const filtro = {idCategoria: idCategoria };
+
+    // Remover registros que correspondem ao filtro
+    await Bateria.deleteMany(filtro)
+      .then((result) => {
+        console.log(`${result.deletedCount} registros removidos`);
+      })
+      .catch((err) => {
+        console.error("Erro ao remover registros:", err);
+      });
     
     const baterias = [];
-    let totalBaterias = Math.ceil(atletas / atletasPorBateria);
+    let totalBaterias = Math.ceil(qtdAtletas / qtdAtletasBateria);
     let strRound = 1;
     let sequencia = 1;
     while (totalBaterias>=1) {
       console.log("Quantidade baterias " + totalBaterias);
       for (let i = 0; i < totalBaterias; i++) {
-
-        this.createRegistro(idEvento, idCategoria, sequencia, i + 1 + "ª bateria do ", i + 1, strRound+" Round", strRound, "Aguardando", 2)
-       
+        if (totalBaterias===1)
+        this.createRegistro(idEvento, idCategoria, sequencia, "Final ", "", strRound, "Aguardando", 2)
+        else this.createRegistro(idEvento, idCategoria, sequencia,  "Final ", i + 1, strRound+"º Round", strRound, "Aguardando", 2)
         ++sequencia;
       }
 
       if (totalBaterias!=1){
         strRound++
-        totalBaterias = Math.ceil((atletas/strRound) / atletasPorBateria);
+        totalBaterias = Math.ceil((qtdAtletas/strRound) / qtdAtletasBateria);
       } else {
         totalBaterias = 0;
       }

@@ -40,6 +40,7 @@ app.delete('/categorias/:id',categoriaController.remove);
 app.get('/baterias', bateriaController.getAll);
 app.get('/baterias/:atributos', bateriaController.getByAttribute);
 app.post('/baterias', bateriaController.create);
+app.post('/baterias/gerar', bateriaController.gerarBaterias);
 app.put('/baterias/:id',bateriaController.atualizarBateria);
 app.delete('/baterias/:id',bateriaController.remove);
 

@@ -11,8 +11,8 @@ const categoriaSchema = new mongoose.Schema({
         qtdAtletas        : Number,
         qtdOndaBateria    : Number,
         tempoBateria      : Number,
-        dataHoraInicio    : Date,
-        dataHoraFinal     : Date,
+        bateriasGerada    : Boolean
+
 });
 
 const Categoria = mongoose.model('Categoria', categoriaSchema);

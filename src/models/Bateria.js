@@ -11,6 +11,8 @@ const bateriaSchema = new mongoose.Schema({
        seqRound     : Number,
        status       : String,
        avanca       : Number,
+       dataHoraInicio    : Date,
+       dataHoraFinal     : Date,
    
 
 })
