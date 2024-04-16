@@ -137,7 +137,7 @@ const atletaController = {
       if (!atletaExistente) {
         return res.status(404).json({ error: "Usuário não encontrado." });
       }
-
+      atletaController.calcularIdade(novosDadosAtleta);
       // Atualize o usuário com os novos dados
       await Atleta.findByIdAndUpdate(id, novosDadosAtleta);
 

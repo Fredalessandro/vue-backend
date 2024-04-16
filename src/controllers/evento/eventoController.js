@@ -32,12 +32,12 @@ const eventoController = {
         {idEvento:null,descricao:'Até 14',idade:14,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
         {idEvento:null,descricao:'Até 16',idade:16,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
         {idEvento:null,descricao:'Até 18',idade:18,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Open Amador',idade:0,regra:'Até',        valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Open Pro',   idade:0,regra:'Open Pro',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Master',     idade:35,regra:'Master',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'GraMaster',  idade:40,regra:'GraMaster', valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Karruna',    idade:50,regra:'Karruna',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Legend',     idade:50,regra:'Legend',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false}
+        {idEvento:null,descricao:'Open Amador',idade:0,regra:'',        valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
+        {idEvento:null,descricao:'Open Pro',   idade:0,regra:'',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
+        {idEvento:null,descricao:'Master',     idade:35,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
+        {idEvento:null,descricao:'GraMaster',  idade:40,regra:'A partir de', valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
+        {idEvento:null,descricao:'Karruna',    idade:50,regra:'A partir de',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
+        {idEvento:null,descricao:'Legend',     idade:55,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false}
     ];
 
     const usuariosJuizes = [

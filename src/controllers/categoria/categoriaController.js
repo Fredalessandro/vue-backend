@@ -118,14 +118,26 @@ const categoriaController = {
       // Consulte categorias com base no filtro construído
       let categorias = await Categoria.find(filtro).sort(opcaoOrdenacao);
       const atletas =  await Atleta.find();
+
+      const ATE         = 'Até';
+      const APARTIR     = 'A partir de';      
+      const OPEN_AMADOR = 'Open Amador';
+      const OPEN_PRO    = 'Open Pro';
       categorias.forEach((categoria)  =>{
         let selecionado = [];
         atletas.forEach(atleta=>{
-          if ((categoria.idade >= atleta.idadeAno || categoria.idade == 0 ) && atleta.idEvento==categoria.idEvento)
-          selecionado.push(atleta);
+          if ((atleta.idadeAno <= categoria.idade) && categoria.regra == ATE && atleta.idEvento==categoria.idEvento) {
+              selecionado.push(atleta);
+          } else if ((atleta.idadeAno >= categoria.idade) && categoria.regra == APARTIR && atleta.idEvento==categoria.idEvento) {
+              selecionado.push(atleta);
+          } else if (categoria.regra == OPEN_AMADOR && atleta.idEvento==categoria.idEvento && atleta.profissional!=true) {
+              selecionado.push(atleta);
+          } else if (categoria.regra == OPEN_PRO && atleta.idEvento==categoria.idEvento && atleta.profissional==true) {
+              selecionado.push(atleta);
+          }
         });
         categoria.atletas=selecionado
-        atletas.filter(filter=>(categoria.idade<=filter.idadeAno && filter.idEvento==categoria.idEvento))
+        //atletas.filter(filter=>(categoria.idade<=filter.idadeAno && filter.idEvento==categoria.idEvento))
      })
       // Retorna os categorias encontrados como resposta
       res.json(categorias);
