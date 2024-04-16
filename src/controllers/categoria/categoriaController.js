@@ -2,20 +2,35 @@
 const WebSocket = require('ws');
 const Categoria = require('../../models/Categoria.js');
 const bateriaController = require('../bateria/bateriaController');
+const Atleta = require('../../models/Atleta.js');
 
 // Controller para manipular as operações CRUD relacionadas aos categorias
 const categoriaController = {
   // Retorna todos os categorias
   async getAll(req, res) {
     try {
-      const categorias = await Categoria.find();
+      let categorias = await Categoria.find();
+      categorias.forEach((categoria) =>{
+         const atletas = Atleta.getAll().filter(filter=>categoria.idade<=filter.idadeAno);
+         categoria.atletas=atletas
+      })
       res.json(categorias);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
   // Cria um novo categoria pela api
-  async createRegistro(idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas)  {
+  async createRegistro(
+    idUsuario, 
+    idEvento, 
+    descricao, 
+    idade, 
+    regra, 
+    valorInscricao, 
+    qtdAtletasBateria, 
+    qtdAtletas,        
+    qtdOndaSurfada, 
+    tempoBateria)  {
     try {
       const categoria = new Categoria({
         idUsuario         ,
@@ -25,7 +40,9 @@ const categoriaController = {
         regra             ,
         valorInscricao    ,
         qtdAtletasBateria ,
-        qtdAtletas
+        qtdAtletas,
+        qtdOndaSurfada, 
+        tempoBateria
       });
       const novaCategoria = await categoria.save();
 
@@ -99,8 +116,17 @@ const categoriaController = {
       });
       const opcaoOrdenacao = { descricao: 1 };
       // Consulte categorias com base no filtro construído
-      const categorias = await Categoria.find(filtro).sort(opcaoOrdenacao);
-
+      let categorias = await Categoria.find(filtro).sort(opcaoOrdenacao);
+      const atletas =  await Atleta.find();
+      categorias.forEach((categoria)  =>{
+        let selecionado = [];
+        atletas.forEach(atleta=>{
+          if ((categoria.idade >= atleta.idadeAno || categoria.idade == 0 ) && atleta.idEvento==categoria.idEvento)
+          selecionado.push(atleta);
+        });
+        categoria.atletas=selecionado
+        atletas.filter(filter=>(categoria.idade<=filter.idadeAno && filter.idEvento==categoria.idEvento))
+     })
       // Retorna os categorias encontrados como resposta
       res.json(categorias);
     } catch (error) {
@@ -131,5 +157,6 @@ const categoriaController = {
       });
   },
 }
+
 
 module.exports = categoriaController;

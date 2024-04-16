@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 const WebSocket = require('ws');
 const Atleta = require('../../models/Atleta.js');
+const DataUtil = require('../../utils/DataUtil.js');
+const eventoController = require('../evento/eventoController.js');
+
 
 // Controller para manipular as operações CRUD relacionadas aos atletas
 const atletaController = {
@@ -32,7 +35,9 @@ const atletaController = {
       rankNordestino,
       rankEstadual,
       idadeAno,
-      cabecaChave
+      cabecaChave,
+      isento,
+      profissional
     } = req.body;
     try {
       
@@ -54,8 +59,12 @@ const atletaController = {
         rankNordestino,
         rankEstadual,
         idadeAno,
-        cabecaChave
+        cabecaChave,
+        isento,
+        profissional
       });
+      
+      atletaController.calcularIdade(atleta);
 
       const novoAtleta = await atleta.save();
       
@@ -82,7 +91,9 @@ const atletaController = {
     rankNordestino,
     rankEstadual,
     idadeAno,
-    cabecaChave
+    cabecaChave,
+    isento,
+    profissional
   ) {
     try {
       const atleta = new Atleta({
@@ -103,8 +114,11 @@ const atletaController = {
         rankNordestino,
         rankEstadual,
         idadeAno,
-        cabecaChave
+        cabecaChave,
+        isento,
+        profissional
       });
+      atletaController.calcularIdade(atleta);
       await atleta.save();
 
       return atleta;
@@ -148,7 +162,7 @@ const atletaController = {
       });
 
       // Consulte usuários com base no filtro construído
-      const atletas = await Atleta.find(filtro);
+      let atletas = await Atleta.find(filtro);
 
       // Retorna os usuários encontrados como resposta
       res.json(atletas);
@@ -199,5 +213,30 @@ const atletaController = {
       });
   },
 };
+atletaController.calcularIdade = function(objeto) {
 
+  const dataAtual = new Date();
+  const anoAtual = dataAtual.getFullYear();
+  const mesAtual = dataAtual.getMonth() + 1;
+  const diaAtual = dataAtual.getDate();
+
+  const dataNascimento = new Date(objeto.dataNascimento);
+  const anoNascimento = dataNascimento.getFullYear();
+  const mesNascimento = dataNascimento.getMonth() + 1;
+  const diaNascimento = dataNascimento.getDate();
+
+  let idade = anoAtual - anoNascimento;
+
+  // Verifica se ainda não fez aniversário este ano
+  if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
+    idade--;
+  }
+  
+  console.log('Idade ' + idade);
+  
+  objeto.idadeAno = idade;
+
+  return idade;
+
+}
 module.exports = atletaController;

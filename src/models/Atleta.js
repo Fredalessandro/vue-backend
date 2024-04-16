@@ -19,6 +19,8 @@ const atletaSchema = new mongoose.Schema({
        rankEstadual: Number,
        idadeAno: Number,
        cabecaChave: Boolean,
+       profissional: Boolean,
+       isento: Boolean
 })
   
 const Atleta = mongoose.model('Atleta', atletaSchema);

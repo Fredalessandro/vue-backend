@@ -44,10 +44,10 @@ app.post('/baterias/gerar', bateriaController.gerarBaterias);
 app.put('/baterias/:id',bateriaController.atualizarBateria);
 app.delete('/baterias/:id',bateriaController.remove);
 
-app.get('/atletas', usuarioController.getAll);
-app.get('/atletas/:atributos', usuarioController.getByAttribute);
-app.post('/atletas', usuarioController.create);
-app.put('/atletas/:id',usuarioController.atualizarUsuario);
+app.get('/atletas', atletaController.getAll);
+app.get('/atletas/:atributos', atletaController.getByAttribute);
+app.post('/atletas', atletaController.create);
+app.put('/atletas/:id',atletaController.atualizarAtleta);
 app.delete('/atletas/:id',atletaController.remove);
 
 

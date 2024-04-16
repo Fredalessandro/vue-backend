@@ -20,13 +20,13 @@ const bateriaController = {
     try {
       
       const bateria = new Bateria({
-        idEvento,
-        idCategoria,
-        sequencia,
-        descricao,
-        round,
-        status,
-        avanca
+        idEvento:idEvento,
+        idCategoria:idCategoria,
+        sequencia:sequencia,
+        descricao:descricao,
+        round:round,
+        status:status,
+        avanca:status
       });
       
       const noovaBateria = await bateria.save();
@@ -145,16 +145,30 @@ const bateriaController = {
       });
     
     const baterias = [];
+    
     let totalBaterias = Math.ceil(qtdAtletas / qtdAtletasBateria);
     let strRound = 1;
     let sequencia = 1;
+    
     while (totalBaterias>=1) {
+      
       console.log("Quantidade baterias " + totalBaterias);
+      
       for (let i = 0; i < totalBaterias; i++) {
-        if (totalBaterias===1)
-        this.createRegistro(idEvento, idCategoria, sequencia, "Final ", "", strRound, "Aguardando", 2)
-        else this.createRegistro(idEvento, idCategoria, sequencia,  "Final ", i + 1, strRound+"º Round", strRound, "Aguardando", 2)
-        ++sequencia;
+        let descricao = (totalBaterias===1)?"Bateria Final ":(i + 1) + "ª Bateria ";
+        let round = (totalBaterias===1)?"Round Final":strRound+"º Round";
+        const bateria = new Bateria({
+          idEvento:idEvento,
+          idCategoria:idCategoria,
+          sequencia:sequencia,
+          descricao,
+          seqBateria:i + 1,
+          round:round,
+          seqRound:strRound,
+          stats:'Aguardando',
+          avanca:2
+        });
+        await bateria.save();
       }
 
       if (totalBaterias!=1){

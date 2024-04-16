@@ -9,9 +9,10 @@ const categoriaSchema = new mongoose.Schema({
         valorInscricao    : Number,
         qtdAtletasBateria : Number,
         qtdAtletas        : Number,
-        qtdOndaBateria    : Number,
+        qtdOndaSurfada    : Number,
         tempoBateria      : Number,
-        bateriasGerada    : Boolean
+        bateriasGerada    : Boolean,
+        atletas : Array
 
 });
 
