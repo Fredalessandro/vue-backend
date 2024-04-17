@@ -13,8 +13,8 @@ const bateriaSchema = new mongoose.Schema({
        avanca       : Number,
        dataHoraInicio    : Date,
        dataHoraFinal     : Date,
+       atletas : Array,
    
-
 })
 
 const Bateria = mongoose.model('Bateria', bateriaSchema);

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const WebSocket = require('ws');
 const Bateria = require('../../models/Bateria.js');
+const Atleta = require('../../models/Atleta.js');
 
 // Controller para manipular as operações CRUD relacionadas aos baterias
 const bateriaController = {
@@ -131,7 +132,7 @@ const bateriaController = {
   },
   async gerarBaterias(req, res) {
     
-    const { idEvento, idCategoria, qtdAtletasBateria, qtdAtletas } = req.body;
+    const { idEvento, idCategoria, qtdAtletasBateria, qtdAtletas, atletas } = req.body;
     
     const filtro = {idCategoria: idCategoria };
 
@@ -143,32 +144,101 @@ const bateriaController = {
       .catch((err) => {
         console.error("Erro ao remover registros:", err);
       });
-    
+
     const baterias = [];
-    
+
     let totalBaterias = Math.ceil(qtdAtletas / qtdAtletasBateria);
     let strRound = 1;
     let sequencia = 1;
-    
+
+    const objetosAtletaChaveados = [];
+    const objetosAtleta = [];
+
+
+    // Algoritmo de Fisher-Yates para embaralhar a lista
+    for (let i = atletas.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [atletas[i], atletas[j]] = [atletas[j], atletas[i]];
+    }
+
+
     while (totalBaterias>=1) {
       
       console.log("Quantidade baterias " + totalBaterias);
       
+      let objetosGeral = [];
+
       for (let i = 0; i < totalBaterias; i++) {
+        
         let descricao = (totalBaterias===1)?"Bateria Final ":(i + 1) + "ª Bateria ";
         let round = (totalBaterias===1)?"Round Final":strRound+"º Round";
-        const bateria = new Bateria({
-          idEvento:idEvento,
-          idCategoria:idCategoria,
-          sequencia:sequencia,
-          descricao,
-          seqBateria:i + 1,
-          round:round,
-          seqRound:strRound,
-          stats:'Aguardando',
-          avanca:2
-        });
-        await bateria.save();
+
+        let objetos = [];
+       
+        try {
+
+          if (strRound==1) {
+
+            for (let index = 0; index < qtdAtletasBateria; index++) {
+              let atletaBateria = null;
+
+              if (index == 0) {
+                let inseriu = false;
+                atletas.forEach((atleta) => {
+                  if (
+                    !objetosGeral.find((objeto) => objeto._id === atleta._id) &&
+                    !inseriu &&
+                    atleta.cabecaChave
+                  ) {
+                    objetos.push(atleta);
+                    objetosGeral.push(atleta);
+                    console.log("Chaveado " + atleta.nome);
+                    inseriu = true;
+                  }
+                });
+
+                if (!inseriu) {
+                  atletas.forEach((atleta) => {
+                    if (!objetosGeral.find((objeto) => objeto._id === atleta._id)) {
+                      objetos.push(atleta);
+                      objetosGeral.push(atleta);
+                      console.log("Não Chaveado " + atleta.nome);
+                    }
+                  });
+                }
+              } else {
+                let inseriu = false;
+                atletas.forEach((atleta) => {
+                  if (
+                    !objetosGeral.find((objeto) => objeto._id === atleta._id) &&
+                    !inseriu
+                  ) {
+                    objetos.push(atleta);
+                    objetosGeral.push(atleta);
+                    console.log("Não Chaveado " + atleta.nome);
+                    inseriu = true;
+                  }
+                });
+              }
+            }
+          }
+          const bateria = new Bateria({
+            idEvento: idEvento,
+            idCategoria: idCategoria,
+            sequencia: sequencia,
+            descricao,
+            seqBateria: i + 1,
+            round: round,
+            seqRound: strRound,
+            stats: "Aguardando",
+            avanca: 2,
+            atletas: objetos,
+          });
+
+          await bateria.save();
+        } catch (error) {
+          console.error("Erro ao gravar baterias:", error);
+        }
       }
 
       if (totalBaterias!=1){
@@ -178,13 +248,11 @@ const bateriaController = {
         totalBaterias = 0;
       }
 
-    }
-    
-    // Distribui os atletas em baterias
-    //return baterias;
+    } 
 
-  }  
 
+    }  
+  
 };
 
 module.exports = bateriaController;
