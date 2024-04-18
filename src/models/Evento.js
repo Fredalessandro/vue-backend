@@ -10,7 +10,8 @@ const eventoSchema = new mongoose.Schema({
         valorInscricao    : Number,
         qtdAtletasBateria : Number,
         qtdOndaSurfada    : Number,
-        tempoBateria      : Number
+        tempoBateria      : Number,
+        cores: Array
 });
 
 const Evento = mongoose.model('Evento', eventoSchema);

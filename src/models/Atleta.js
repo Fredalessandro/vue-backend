@@ -20,7 +20,8 @@ const atletaSchema = new mongoose.Schema({
        idadeAno: Number,
        cabecaChave: Boolean,
        profissional: Boolean,
-       isento: Boolean
+       isento: Boolean,
+       sexo: String
 })
   
 const Atleta = mongoose.model('Atleta', atletaSchema);

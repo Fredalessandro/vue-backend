@@ -37,7 +37,8 @@ const atletaController = {
       idadeAno,
       cabecaChave,
       isento,
-      profissional
+      profissional,
+      sexo
     } = req.body;
     try {
       
@@ -61,7 +62,8 @@ const atletaController = {
         idadeAno,
         cabecaChave,
         isento,
-        profissional
+        profissional,
+        sexo
       });
       
       atletaController.calcularIdade(atleta);
@@ -93,7 +95,8 @@ const atletaController = {
     idadeAno,
     cabecaChave,
     isento,
-    profissional
+    profissional,
+    sexo
   ) {
     try {
       const atleta = new Atleta({
@@ -116,7 +119,8 @@ const atletaController = {
         idadeAno,
         cabecaChave,
         isento,
-        profissional
+        profissional,
+        sexo
       });
       atletaController.calcularIdade(atleta);
       await atleta.save();

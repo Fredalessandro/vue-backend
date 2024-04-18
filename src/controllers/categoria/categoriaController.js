@@ -10,10 +10,10 @@ const categoriaController = {
   async getAll(req, res) {
     try {
       let categorias = await Categoria.find();
-      categorias.forEach((categoria) =>{
+      /*categorias.forEach((categoria) =>{
          const atletas = Atleta.getAll().filter(filter=>categoria.idade<=filter.idadeAno);
          categoria.atletas=atletas
-      })
+      })*/
       res.json(categorias);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -30,7 +30,9 @@ const categoriaController = {
     qtdAtletasBateria, 
     qtdAtletas,        
     qtdOndaSurfada, 
-    tempoBateria)  {
+    tempoBateria,
+    sexo,
+    cores)  {
     try {
       const categoria = new Categoria({
         idUsuario         ,
@@ -42,7 +44,9 @@ const categoriaController = {
         qtdAtletasBateria ,
         qtdAtletas,
         qtdOndaSurfada, 
-        tempoBateria
+        tempoBateria,
+        sexo,
+        cores
       });
       const novaCategoria = await categoria.save();
 
@@ -56,7 +60,7 @@ const categoriaController = {
   },
   // Cria um novo categoria pelo browser
   async create(req, res) {
-    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas } = req.body;
+    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas, sexo, cores } = req.body;
     try {
       const categoria = new Categoria({
         idUsuario         ,
@@ -66,7 +70,9 @@ const categoriaController = {
         regra             ,
         valorInscricao    ,
         qtdAtletasBateria ,
-        qtdAtletas
+        qtdAtletas,
+        sexo,
+        cores
       });
       const novaCategoria = await categoria.save();
 
@@ -123,9 +129,10 @@ const categoriaController = {
       const APARTIR     = 'A partir de';      
       const OPEN_AMADOR = 'Open Amador';
       const OPEN_PRO    = 'Open Pro';
+
       categorias.forEach((categoria)  =>{
         let selecionado = [];
-        atletas.forEach(atleta=>{
+        atletas.filter(filter=>filter.sexo=categoria.sexo).forEach(atleta=>{
           if ((atleta.idadeAno <= categoria.idade) && categoria.regra == ATE && atleta.idEvento==categoria.idEvento) {
               selecionado.push(atleta);
           } else if ((atleta.idadeAno >= categoria.idade) && categoria.regra == APARTIR && atleta.idEvento==categoria.idEvento) {

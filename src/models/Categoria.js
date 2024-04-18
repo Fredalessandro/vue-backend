@@ -12,8 +12,9 @@ const categoriaSchema = new mongoose.Schema({
         qtdOndaSurfada    : Number,
         tempoBateria      : Number,
         bateriasGerada    : Boolean,
-        atletas : Array
-
+        sexo: String,
+        atletas : Array,
+        cores: Array
 });
 
 const Categoria = mongoose.model('Categoria', categoriaSchema);

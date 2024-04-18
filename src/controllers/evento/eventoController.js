@@ -25,19 +25,19 @@ const eventoController = {
     
     
     const categorias = [    
-        {idEvento:null,descricao:'Até 6',idade:6,regra:'Até',              valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Até 8',idade:8,regra:'Até',              valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Até 10',idade:10,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Até 12',idade:12,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Até 14',idade:14,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Até 16',idade:16,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Até 18',idade:18,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Open Amador',idade:0,regra:'',        valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Open Pro',   idade:0,regra:'',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Master',     idade:35,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'GraMaster',  idade:40,regra:'A partir de', valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Karruna',    idade:50,regra:'A partir de',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false},
-        {idEvento:null,descricao:'Legend',     idade:55,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false}
+        {idEvento:null,descricao:'Até 6',idade:6,regra:'Até',              valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Até 8',idade:8,regra:'Até',              valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Até 10',idade:10,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Até 12',idade:12,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Até 14',idade:14,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Até 16',idade:16,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Até 18',idade:18,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Open Amador',idade:0,regra:'',        valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Open Pro',   idade:0,regra:'',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Master',     idade:35,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'GraMaster',  idade:40,regra:'A partir de', valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Karruna',    idade:50,regra:'A partir de',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Legend',     idade:55,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'}
     ];
 
     const usuariosJuizes = [
@@ -49,24 +49,24 @@ const eventoController = {
     ];
 
     const atletas = [
-        {idEvento:null,nome:'LEONADO MATEUS'   ,apelidio:'LEONADO MATEUS',   email:'LEONADOMATEUS@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2010',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:101,rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true},
-        {idEvento:null,nome:'MIGUEL GOMES'     ,apelidio:'MIGUEL GOMES',     email:'MIGUELGOMES@nsl.com.br'      ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:10, rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'HEITOR GOMES'     ,apelidio:'HEITOR GOMES',     email:'HEITORGOMES@nsl.com.br'      ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:159,rankEstadual:211,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'GABRIEL MEDEIROS' ,apelidio:'GABRIEL MEDEIROS', email:'GABRIELMEDEIROS@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:102,rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'GABRIEL CIPRIANO' ,apelidio:'GABRIEL CIPRIANO', email:'GABRIELCIPRIANO@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:103,rankEstadual:120,idadeAno:0,cabecaChave:false,profissional:false,isento:true},
-        {idEvento:null,nome:'SHAR BOY'         ,apelidio:'SHAR BOY',         email:'SHARBOY@nsl.com.br'          ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:104,rankEstadual:201,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'DAVI BRASIL'      ,apelidio:'DAVI BRASIL',      email:'DAVIBRASIL@nsl.com.br'       ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:98, rankEstadual:300,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'GABRIEL BRASIL'   ,apelidio:'GABRIEL BRASIL',   email:'GABRIELBRASIL@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:25, rankEstadual:250,idadeAno:0,cabecaChave:false,profissional:false,isento:true},  
-        {idEvento:null,nome:'JONAS GABRIEL'    ,apelidio:'JONAS GABRIEL',    email:'JONASGABRIEL@nsl.com.br'     ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:122,rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true},
-        {idEvento:null,nome:'NICOLAS CLAUDINO' ,apelidio:'NICOLAS CLAUDINO', email:'NICOLASCLAUDINO@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:131,rankEstadual:99 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'NICOLAS MIGUEL'   ,apelidio:'NICOLAS MIGUEL',   email:'NICOLASMIGUEL@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:102,rankEstadual:111,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'ALESSANDRO FELLIX',apelidio:'ALESSANDRO FELLIX',email:'ALESSANDROFELLIX@nsl.com.br' ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:103,rankEstadual:98 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'PAULIINHO EDC'    ,apelidio:'PAULIINHO EDC',    email:'PAULIINHEDC@nsl.com.br'      ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:111,rankEstadual:99 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true},
-        {idEvento:null,nome:'NICOLAS DANIEL'   ,apelidio:'NICOLAS DANIEL',   email:'NICOLASDANIEL@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:121,rankEstadual:80 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'CAUÃ LUCIO XAVIER',apelidio:'CAUÃ LUCIO XAVIER',email:'CAUALUCIOXAVIER@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:131,rankEstadual:0  ,idadeAno:0,cabecaChave:false,profissional:false,isento:true}, 
-        {idEvento:null,nome:'IURY ROCHA'       ,apelidio:'IURY ROCHA',       email:'IURYROCHA@nsl.com.br'        ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:100,rankEstadual:0  ,idadeAno:0,cabecaChave:false,profissional:false,isento:true},  
+        {idEvento:null,nome:'LEONADO MATEUS'   ,apelidio:'LEONADO MATEUS',   email:'LEONADOMATEUS@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2010',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:101,rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'},
+        {idEvento:null,nome:'MIGUEL GOMES'     ,apelidio:'MIGUEL GOMES',     email:'MIGUELGOMES@nsl.com.br'      ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:10, rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'HEITOR GOMES'     ,apelidio:'HEITOR GOMES',     email:'HEITORGOMES@nsl.com.br'      ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:159,rankEstadual:211,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'GABRIEL MEDEIROS' ,apelidio:'GABRIEL MEDEIROS', email:'GABRIELMEDEIROS@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:102,rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'GABRIEL CIPRIANO' ,apelidio:'GABRIEL CIPRIANO', email:'GABRIELCIPRIANO@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:103,rankEstadual:120,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'},
+        {idEvento:null,nome:'SHAR BOY'         ,apelidio:'SHAR BOY',         email:'SHARBOY@nsl.com.br'          ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:104,rankEstadual:201,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'DAVI BRASIL'      ,apelidio:'DAVI BRASIL',      email:'DAVIBRASIL@nsl.com.br'       ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:98, rankEstadual:300,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'GABRIEL BRASIL'   ,apelidio:'GABRIEL BRASIL',   email:'GABRIELBRASIL@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:25, rankEstadual:250,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'},  
+        {idEvento:null,nome:'JONAS GABRIEL'    ,apelidio:'JONAS GABRIEL',    email:'JONASGABRIEL@nsl.com.br'     ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:122,rankEstadual:200,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'},
+        {idEvento:null,nome:'NICOLAS CLAUDINO' ,apelidio:'NICOLAS CLAUDINO', email:'NICOLASCLAUDINO@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:131,rankEstadual:99 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'NICOLAS MIGUEL'   ,apelidio:'NICOLAS MIGUEL',   email:'NICOLASMIGUEL@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:102,rankEstadual:111,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'ALESSANDRO FELLIX',apelidio:'ALESSANDRO FELLIX',email:'ALESSANDROFELLIX@nsl.com.br' ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:103,rankEstadual:98 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'PAULIINHO EDC'    ,apelidio:'PAULIINHO EDC',    email:'PAULIINHEDC@nsl.com.br'      ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:111,rankEstadual:99 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'},
+        {idEvento:null,nome:'NICOLAS DANIEL'   ,apelidio:'NICOLAS DANIEL',   email:'NICOLASDANIEL@nsl.com.br'    ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:121,rankEstadual:80 ,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'CAUÃ LUCIO XAVIER',apelidio:'CAUÃ LUCIO XAVIER',email:'CAUALUCIOXAVIER@nsl.com.br'  ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'MACEIO',uf:'AL',rankNordestino:131,rankEstadual:0  ,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'}, 
+        {idEvento:null,nome:'IURY ROCHA'       ,apelidio:'IURY ROCHA',       email:'IURYROCHA@nsl.com.br'        ,telefone:'81988888888',cpf:'621.374.924-11',dataNascimento:'10/03/2014',cep:'50900-120',endereco:'RUA DO SURF',numero:'10',complemento:'',bairro:'VIBER',cidade:'RECIFE',uf:'PE',rankNordestino:100,rankEstadual:0  ,idadeAno:0,cabecaChave:false,profissional:false,isento:true,sexo:'Masculino'},  
     ]; 
-    const {idUsuario, evento, local, dataInicio, dataFinal, status, valorInscricao, qtdAtletasBateria, qtdOndaSurfada, tempoBateria} = req.body;
+    const {idUsuario, evento, local, dataInicio, dataFinal, status, valorInscricao, qtdAtletasBateria, qtdOndaSurfada, tempoBateria, cores} = req.body;
     
     try {
       const evt = new Evento({
@@ -79,7 +79,8 @@ const eventoController = {
         valorInscricao, 
         qtdAtletasBateria,  
         qtdOndaSurfada, 
-        tempoBateria
+        tempoBateria,
+        cores
       });
       const novoEvento = await evt.save();
       
@@ -93,7 +94,8 @@ const eventoController = {
                                            novoEvento.qtdAtletasBateria,
                                            categoria.qtdAtletas,
                                            novoEvento.qtdOndaSurfada,
-                                           novoEvento.tempoBateria)
+                                           novoEvento.tempoBateria,
+                                           categoria.sexo)
       });
       
       usuariosJuizes.forEach(juiz => {
@@ -130,7 +132,8 @@ const eventoController = {
           atleta.idadeAno,
           atleta.cabecaChave,
           atleta.isento,
-          atleta.profissional
+          atleta.profissional,
+          atleta.sexo
         );
       });
 
