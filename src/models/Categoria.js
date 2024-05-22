@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const {Schema} = require('mongoose');
+const {dbevento} = require('../config/database.js');
 
-const categoriaSchema = new mongoose.Schema({
+const categoriaSchema = new Schema({
         idUsuario         : String,
         idEvento          : String,
         descricao         : String,
@@ -17,6 +18,6 @@ const categoriaSchema = new mongoose.Schema({
         cores: Array
 });
 
-const Categoria = mongoose.model('Categoria', categoriaSchema);
+const Categoria = dbevento.model('Categoria', categoriaSchema);
 
 module.exports = Categoria;

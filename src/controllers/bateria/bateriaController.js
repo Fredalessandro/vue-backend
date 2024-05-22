@@ -118,18 +118,6 @@ const bateriaController = {
       res.status(500).json({ error: error.message });
     }
   },
-  async removeRegisters(atributo, valor) {
-    const filtro = { [atributo]: valor };
-
-    // Remover registros que correspondem ao filtro
-    await Bateria.deleteMany(filtro)
-      .then((result) => {
-        console.log(`${result.deletedCount} registros removidos`);
-      })
-      .catch((err) => {
-        console.error("Erro ao remover registros:", err);
-      });
-  },
   async gerarBaterias(req, res) {
     
     const { idEvento, idCategoria, qtdAtletasBateria, qtdAtletas, atletas } = req.body;
@@ -250,9 +238,22 @@ const bateriaController = {
 
     } 
 
-
-    }  
+  }  
   
+};
+
+bateriaController.removeRegisters = async function(atributo, valor) {
+
+    const filtro = { [atributo]: valor };
+
+    // Remover registros que correspondem ao filtro
+    await Bateria.deleteMany(filtro)
+      .then((result) => {
+        console.log(`${result.deletedCount} registros removidos`);
+      })
+      .catch((err) => {
+        console.error("Erro ao remover registros:", err);
+      });
 };
 
 module.exports = bateriaController;

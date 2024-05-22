@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-const WebSocket = require('ws');
-const Usuario = require('../../models/Usuario.js');
+const WebSocket = require("ws");
+const Usuario = require("../../models/Usuario.js");
 
 // Controller para manipular as operações CRUD relacionadas aos usuarios
 const usuarioController = {
@@ -14,18 +14,36 @@ const usuarioController = {
     }
   },
   async create(req, res) {
-    const { idEvento,nome, login, email, telefone, tipo, senha, ativo } = req.body;
+    const {
+      idUsuario,
+      idEvento,
+      nome,
+      login,
+      email,
+      cpf,
+      dataNascimento,
+      sexo,
+      perfil,
+      telefone,
+      tipo,
+      senha,
+      ativo,
+    } = req.body;
     try {
-      
       const usuario = new Usuario({
+        idUsuario,
         idEvento,
         nome,
         login,
         email,
+        cpf,
+        dataNascimento,
+        sexo,
+        perfil,
         telefone,
         tipo,
         senha,
-        ativo
+        ativo,
       });
       await usuario.save();
 
@@ -34,18 +52,36 @@ const usuarioController = {
       res.status(400).json({ error: error.message });
     }
   },
-  async createRegister(idEvento,nome, login, email, telefone, tipo, senha, ativo) {
-
+  async createRegister(
+    idUsuario,
+    idEvento,
+    nome,
+    login,
+    email,
+    cpf,
+    dataNascimento,
+    sexo,
+    telefone,
+    tipo,
+    perfil,
+    senha,
+    ativo
+  ) {
     try {
       const usuario = new Usuario({
+        idUsuario,
         idEvento,
         nome,
         login,
         email,
+        cpf,
+        dataNascimento,
+        sexo,
         telefone,
         tipo,
+        perfil,
         senha,
-        ativo
+        ativo,
       });
       await usuario.save();
 
@@ -54,13 +90,11 @@ const usuarioController = {
       throw new Error(error.message);
     }
   },
-  async atualizarUsuario(req, res) {
-
+  async updateUser(req, res) {
     const { id } = req.params;
     const novosDadosUsuario = req.body; // Novos dados do usuário a serem atualizados
 
     try {
-
       // Verifique se o usuário com o ID fornecido existe
       const usuarioExistente = await Usuario.findById(id);
 
@@ -102,24 +136,74 @@ const usuarioController = {
     }
   },
   // Verifica login e senha
-  async checkLogin(req, res) {
-    const { login, senha } = req.body;
+  async user(req, res) {
+    const { id } = req.params;
     try {
-      // Aqui você faria a verificação no banco de dados se o login e senha correspondem a algum registro
-      // Este é apenas um exemplo simplificado
-      const usuario = await Usuario.find({ login: login, senha: senha });
-      if (usuario.length != 0) {
-        res.json(usuario[0]);
+      const usuario = await Usuario.findById(id);
+      if (usuario) {
+        res.json(usuario);
       } else {
         res
           .status(401)
-          .json({ success: false, message: "Credenciais inválidas" });
+          .json({ success: false, message: "Usuário não encontrado." });
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
+  async userFiltro(req, res) {
+    const { filtro } = req.params;
+    try {
+      const usuario = await Usuario.findOne(JSON.parse(filtro));
+      if (usuario) {
+        res.json(usuario);
+      } else {
+        res
+          .status(401)
+          .json({ success: false, message: "Usuário não encontrado." });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  async checkLogin(req, res) {
+    const { login, senha } = req.body;
+    try {
+      // Aqui você faria a verificação no banco de dados se o login e senha correspondem a algum registro
+      // Este é apenas um exemplo simplificado
+      
+      const usuario = await Usuario.find({ login: login, senha: senha });
+      if (usuario.length != 0 && usuario[0].senha === senha) {
+        res.json(usuario[0]);
+      } else {
+        const totalRecord = await Usuario.countDocuments();
+        if (login.toLowerCase()==='afred' && totalRecord === 0) {
+          const usuario = Usuario({
+            idUsuario: null,
+            nome: 'ALESSANDRO',
+            login: 'afred',
+            email: 'fredalessandro@gmail.com',
+            cpf: '621.374.924-15',
+            telefone: '(81)98414-7601',
+            dataNascimento: '1971-10-27',
+            senha: '312831',
+            sexo: 'Masculino',
+            tipo: 'Admin',
+            ativo: true
+          })
+          await usuario.save();
+          res.json(usuario);
+        } else {
+          res
+          .status(401)
+          .json({ success: false, message: "Credenciais inválidas" });
+        }
 
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
   // Remove um Usuario
   async remove(req, res) {
     const { id } = req.params;
@@ -130,18 +214,17 @@ const usuarioController = {
       res.status(500).json({ error: error.message });
     }
   },
-  async removeRegisters(atributo, valor) {
-    const filtro = { [atributo]: valor };
-
-    // Remover registros que correspondem ao filtro
-    await Usuario.deleteMany(filtro)
-      .then((result) => {
-        console.log(`${result.deletedCount} registros removidos`);
-      })
-      .catch((err) => {
-        console.error("Erro ao remover registros:", err);
-      });
-  },
 };
+(usuarioController.removeRegisters = async function (atributo, valor) {
+  const filtro = { [atributo]: valor };
 
-module.exports = usuarioController;
+  // Remover registros que correspondem ao filtro
+  await Usuario.deleteMany(filtro)
+    .then((result) => {
+      console.log(`${result.deletedCount} registros removidos`);
+    })
+    .catch((err) => {
+      console.error("Erro ao remover registros:", err);
+    });
+}),
+  (module.exports = usuarioController);

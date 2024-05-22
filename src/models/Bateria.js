@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const {Schema} = require('mongoose');
+const {dbevento} = require('../config/database.js');
 
-const bateriaSchema = new mongoose.Schema({
+const bateriaSchema = new Schema({
 
        idEvento     : String,
        idCategoria  : String,
@@ -17,6 +18,6 @@ const bateriaSchema = new mongoose.Schema({
    
 })
 
-const Bateria = mongoose.model('Bateria', bateriaSchema);
+const Bateria = dbevento.model('Bateria', bateriaSchema);
 
 module.exports = Bateria;

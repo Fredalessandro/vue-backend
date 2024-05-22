@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const {Schema} = require('mongoose');
+const {dbevento} = require('../config/database.js');
 
-const atletaSchema = new mongoose.Schema({
+const atletaSchema = new Schema({
        idEvento: String,
        nome    : String,
        apelidio: String,
@@ -24,6 +25,6 @@ const atletaSchema = new mongoose.Schema({
        sexo: String
 })
   
-const Atleta = mongoose.model('Atleta', atletaSchema);
+const Atleta = dbevento.model('Atleta', atletaSchema);
 
 module.exports = Atleta;

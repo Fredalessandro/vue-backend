@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 const WebSocket = require('ws');
 const Atleta = require('../../models/Atleta.js');
-const DataUtil = require('../../utils/DataUtil.js');
-const eventoController = require('../evento/eventoController.js');
+const DataUtil = require('../../utils/DataUtil.js').default;
 
 
 // Controller para manipular as operações CRUD relacionadas aos atletas
@@ -14,6 +13,61 @@ const atletaController = {
       res.json(atletas);
     } catch (error) {
       res.status(500).json({ error: error.message });
+    }
+  },
+  async createRegister(
+    idEvento,
+    nome,
+    apelidio,
+    email,
+    telefone,
+    cpf,
+    dataNascimento,
+    cep,
+    endereco,
+    numero,
+    complemento,
+    bairro,
+    cidade,
+    uf,
+    rankNordestino,
+    rankEstadual,
+    idadeAno,
+    cabecaChave,
+    isento,
+    profissional,
+    sexo
+  ) {
+    try {
+      const atleta = new Atleta({
+        idEvento,
+        nome,
+        apelidio,
+        email,
+        telefone,
+        cpf,
+        dataNascimento,
+        cep,
+        endereco,
+        numero,
+        complemento,
+        bairro,
+        cidade,
+        uf,
+        rankNordestino,
+        rankEstadual,
+        idadeAno,
+        cabecaChave,
+        isento,
+        profissional,
+        sexo
+      });
+      DataUtil.calcularIdade(atleta);
+      await atleta.save();
+
+      return atleta;
+    } catch (error) {
+      throw new Error(error.message);
     }
   },
   async create(req, res) {
@@ -66,68 +120,13 @@ const atletaController = {
         sexo
       });
       
-      atletaController.calcularIdade(atleta);
+      DataUtil.calcularIdade(atleta);
 
       const novoAtleta = await atleta.save();
       
       res.status(201).json(novoAtleta);
     } catch (error) {
       res.status(400).json({ error: error.message });
-    }
-  },
-  async createRegister(
-    idEvento,
-    nome,
-    apelidio,
-    email,
-    telefone,
-    cpf,
-    dataNascimento,
-    cep,
-    endereco,
-    numero,
-    complemento,
-    bairro,
-    cidade,
-    uf,
-    rankNordestino,
-    rankEstadual,
-    idadeAno,
-    cabecaChave,
-    isento,
-    profissional,
-    sexo
-  ) {
-    try {
-      const atleta = new Atleta({
-        idEvento,
-        nome,
-        apelidio,
-        email,
-        telefone,
-        cpf,
-        dataNascimento,
-        cep,
-        endereco,
-        numero,
-        complemento,
-        bairro,
-        cidade,
-        uf,
-        rankNordestino,
-        rankEstadual,
-        idadeAno,
-        cabecaChave,
-        isento,
-        profissional,
-        sexo
-      });
-      atletaController.calcularIdade(atleta);
-      await atleta.save();
-
-      return atleta;
-    } catch (error) {
-      throw new Error(error.message);
     }
   },
   async atualizarAtleta(req, res) {
@@ -141,7 +140,7 @@ const atletaController = {
       if (!atletaExistente) {
         return res.status(404).json({ error: "Usuário não encontrado." });
       }
-      atletaController.calcularIdade(novosDadosAtleta);
+      this.calcularIdade(novosDadosAtleta);
       // Atualize o usuário com os novos dados
       await Atleta.findByIdAndUpdate(id, novosDadosAtleta);
 
@@ -203,8 +202,11 @@ const atletaController = {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  },
-  async removeRegisters(atributo, valor) {
+  }
+  
+}
+atletaController.removeRegisters = async function(atributo, valor) {
+
     const filtro = { [atributo]: valor };
 
     // Remover registros que correspondem ao filtro
@@ -215,32 +217,7 @@ const atletaController = {
       .catch((err) => {
         console.error("Erro ao remover registros:", err);
       });
-  },
-};
-atletaController.calcularIdade = function(objeto) {
 
-  const dataAtual = new Date();
-  const anoAtual = dataAtual.getFullYear();
-  const mesAtual = dataAtual.getMonth() + 1;
-  const diaAtual = dataAtual.getDate();
+},
 
-  const dataNascimento = new Date(objeto.dataNascimento);
-  const anoNascimento = dataNascimento.getFullYear();
-  const mesNascimento = dataNascimento.getMonth() + 1;
-  const diaNascimento = dataNascimento.getDate();
-
-  let idade = anoAtual - anoNascimento;
-
-  // Verifica se ainda não fez aniversário este ano
-  if (mesAtual < mesNascimento || (mesAtual === mesNascimento && diaAtual < diaNascimento)) {
-    idade--;
-  }
-  
-  console.log('Idade ' + idade);
-  
-  objeto.idadeAno = idade;
-
-  return idade;
-
-}
 module.exports = atletaController;

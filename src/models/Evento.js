@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const {Schema} = require('mongoose');
+const {dbevento} = require('../config/database.js');
 
-const eventoSchema = new mongoose.Schema({
+const eventoSchema = new Schema({
         idUsuario : String,
         evento    : String,
         local     : String,
@@ -10,10 +11,15 @@ const eventoSchema = new mongoose.Schema({
         valorInscricao    : Number,
         qtdAtletasBateria : Number,
         qtdOndaSurfada    : Number,
+        mediaAtletasCategorias : Number,
         tempoBateria      : Number,
-        cores: Array
+        masculino         : Boolean,
+        feminino          : Boolean,
+        gerarCategorias   : Boolean,
+        cores: Array,
+        
 });
 
-const Evento = mongoose.model('Evento', eventoSchema);
+const Evento = dbevento.model('Evento', eventoSchema);
 
 module.exports = Evento;

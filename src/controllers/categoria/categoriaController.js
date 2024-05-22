@@ -31,22 +31,24 @@ const categoriaController = {
     qtdAtletas,        
     qtdOndaSurfada, 
     tempoBateria,
+    altetas,
     sexo,
     cores)  {
     try {
       const categoria = new Categoria({
-        idUsuario         ,
-        idEvento          ,
-        descricao         ,
-        idade             ,
-        regra             ,
-        valorInscricao    ,
-        qtdAtletasBateria ,
-        qtdAtletas,
-        qtdOndaSurfada, 
-        tempoBateria,
-        sexo,
-        cores
+        idUsuario:idUsuario         ,
+        idEvento:idEvento          ,
+        descricao:descricao         ,
+        idade:idade             ,
+        regra :regra             ,
+        valorInscricao:valorInscricao    ,
+        qtdAtletasBateria:qtdAtletasBateria ,
+        qtdAtletas:qtdAtletas,
+        qtdOndaSurfada:qtdOndaSurfada, 
+        tempoBateria:tempoBateria,
+        atletas:[],
+        sexo:sexo,
+        cores:cores
       });
       const novaCategoria = await categoria.save();
 
@@ -60,19 +62,22 @@ const categoriaController = {
   },
   // Cria um novo categoria pelo browser
   async create(req, res) {
-    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas, sexo, cores } = req.body;
+    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas, qtdOndaSurfada, tempoBateria, ß, sexo, cores } = req.body;
     try {
       const categoria = new Categoria({
-        idUsuario         ,
-        idEvento          ,
-        descricao         ,
-        idade             ,
-        regra             ,
-        valorInscricao    ,
-        qtdAtletasBateria ,
-        qtdAtletas,
-        sexo,
-        cores
+        idUsuario:idUsuario         ,
+        idEvento:idEvento          ,
+        descricao:descricao         ,
+        idade:idade             ,
+        regra :regra             ,
+        valorInscricao:valorInscricao    ,
+        qtdAtletasBateria:qtdAtletasBateria ,
+        qtdAtletas:qtdAtletas,
+        qtdOndaSurfada:qtdOndaSurfada, 
+        tempoBateria:tempoBateria,
+        atletas:[],
+        sexo:sexo,
+        cores:cores
       });
       const novaCategoria = await categoria.save();
 
@@ -163,19 +168,19 @@ const categoriaController = {
       res.status(500).json({ error: error.message });
     }
   },
-  async removeRegisters(atributo, valor) {
-    const filtro = { [atributo]: valor };
-
-    // Remover registros que correspondem ao filtro
-    await Categoria.deleteMany(filtro)
-      .then((result) => {
-        console.log(`${result.deletedCount} registros removidos`);
-      })
-      .catch((err) => {
-        console.error("Erro ao remover registros:", err);
-      });
-  },
+  
 }
+categoriaController.removeRegisters = async function(atributo, valor) {
 
+  const filtro = { [atributo]: valor };
 
+  // Remover registros que correspondem ao filtro
+  await Categoria.deleteMany(filtro)
+    .then((result) => {
+      console.log(`${result.deletedCount} registros removidos`);
+    })
+    .catch((err) => {
+      console.error("Erro ao remover registros:", err);
+    });
+};
 module.exports = categoriaController;
