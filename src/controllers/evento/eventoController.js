@@ -221,6 +221,22 @@ const eventoController = {
       res.status(500).json({ error: error.message });
     }
   },
+  async eventValid(req, res) {
+    const { filtro } = req.params;
+    try {
+      const events = await Evento.find(JSON.parse(filtro));
+      if (events && events.length>0) {
+        const event = events.filter(filter => (filter != 'Finalizado'));
+        res.json(event);
+      } else {
+        res
+          .status(401)
+          .json({ success: false, message: "Evento não encontrado." });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
   // Retorna um Evento por atributo
   async getByAttribute(req, res) {
     const atributos = req.params.atributos.split("/");

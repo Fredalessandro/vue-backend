@@ -2,7 +2,6 @@ const express = require('express');
 //const https = require('https');
 //const fs = require('fs');
 const cors = require('cors');
-const {dbevento} = require('./config/database.js');
 const usuarioController = require('./controllers/usuario/usuarioController');
 const categoriaController = require('./controllers/categoria/categoriaController');
 const bateriaController = require('./controllers/bateria/bateriaController');
@@ -13,11 +12,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+//startDatabase().catch(console.dir);
 
-dbevento.on('error', console.error.bind(console, 'Erro de conexão com o dbevento:'));
+/*dbevento.on('error', console.error.bind(console, 'Erro de conexão com o dbevento:'));
 dbevento.once('open', () => {
   console.log('Conectado ao dbevento.');
-});
+});*/
 
 /*dblns.on('error', console.error.bind(console, 'Erro de conexão com o dblns:'));
 dblns.once('open', () => {
@@ -38,15 +38,17 @@ app.delete('/users/:id',usuarioController.remove);
 app.get('/events',            eventoController.getAll);
 app.get('/events/:atributos', eventoController.getByAttribute);
 app.get('/event/:id',    eventoController.event);
+app.get('/eventValid/:filtro',    eventoController.eventValid);
 app.post('/events',           eventoController.create);
 app.put('/events/:id',        eventoController.atualizarEvento);
 app.delete('/events/:id',     eventoController.remove);
 
-app.get('/categorias',            categoriaController.getAll);
-app.get('/categorias/:atributos', categoriaController.getByAttribute);
-app.post('/categorias',           categoriaController.create);
-app.put('/categorias/:id',        categoriaController.atualizarCategoria);
-app.delete('/categorias/:id',     categoriaController.remove);
+app.get('/categorys',            categoriaController.getAll);
+app.get('/category/:id',    categoriaController.categoria);
+app.get('/categorys/:atributos', categoriaController.getByAttribute);
+app.post('/categorys',           categoriaController.create);
+app.put('/categorys/:id',        categoriaController.atualizarCategoria);
+app.delete('/categorys/:id',     categoriaController.remove);
 
 app.get('/baterias',            bateriaController.getAll);
 app.get('/baterias/:atributos', bateriaController.getByAttribute);

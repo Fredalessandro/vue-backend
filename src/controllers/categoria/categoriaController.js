@@ -128,7 +128,7 @@ const categoriaController = {
       const opcaoOrdenacao = { descricao: 1 };
       // Consulte categorias com base no filtro construído
       let categorias = await Categoria.find(filtro).sort(opcaoOrdenacao);
-      const atletas =  await Atleta.find();
+      /*const atletas =  await Atleta.find();
 
       const ATE         = 'Até';
       const APARTIR     = 'A partir de';      
@@ -150,7 +150,7 @@ const categoriaController = {
         });
         categoria.atletas=selecionado
         //atletas.filter(filter=>(categoria.idade<=filter.idadeAno && filter.idEvento==categoria.idEvento))
-     })
+     })*/
       // Retorna os categorias encontrados como resposta
       res.json(categorias);
     } catch (error) {
@@ -164,6 +164,21 @@ const categoriaController = {
     try {
       await Categoria.findByIdAndDelete(id);
       res.json({ success: true, message: "Categoria removido com sucesso" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  async categoria(req, res) {
+    const { id } = req.params;
+    try {
+      const categoria = await Categoria.findById(id);
+      if (categoria) {
+        res.json(categoria);
+      } else {
+        res
+          .status(401)
+          .json({ success: false, message: "Categoria não encontrado." });
+      }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
