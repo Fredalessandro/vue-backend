@@ -5,7 +5,7 @@ const DataUtil = require('../../utils/DataUtil.js').default;
 
 
 // Controller para manipular as operações CRUD relacionadas aos atletas
-const atletaController = {
+const athleteController = {
   // Retorna todos os atletas
   async getAll(req, res) {
     try {
@@ -129,7 +129,7 @@ const atletaController = {
       res.status(400).json({ error: error.message });
     }
   },
-  async atualizarAtleta(req, res) {
+  async atualizar(req, res) {
     const { id } = req.params;
     const novosDadosAtleta = req.body; // Novos dados do usuário a serem atualizados
 
@@ -205,7 +205,7 @@ const atletaController = {
   }
   
 }
-atletaController.removeRegisters = async function(atributo, valor) {
+athleteController.removeRegisters = async function(atributo, valor) {
 
     const filtro = { [atributo]: valor };
 
@@ -220,4 +220,4 @@ atletaController.removeRegisters = async function(atributo, valor) {
 
 },
 
-module.exports = atletaController;
+module.exports = athleteController;

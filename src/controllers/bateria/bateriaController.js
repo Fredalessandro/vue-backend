@@ -60,7 +60,7 @@ const bateriaController = {
     }
   },
 
-  async atualizarBateria(req, res) {
+  async atualizar(req, res) {
 
     const { id } = req.params;
     const novosDadosBateria = req.body; // Novos dados do bateria a serem atualizados
@@ -118,7 +118,7 @@ const bateriaController = {
       res.status(500).json({ error: error.message });
     }
   },
-  async gerarBaterias(req, res) {
+  async gerar(req, res) {
     
     const { idEvento, idCategoria, qtdAtletasBateria, qtdAtletas, atletas } = req.body;
     

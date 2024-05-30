@@ -62,15 +62,16 @@ const categoriaController = {
   },
   // Cria um novo categoria pelo browser
   async create(req, res) {
-    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas, qtdOndaSurfada, tempoBateria, ß, sexo, cores } = req.body;
+    const { idUsuario, idEvento, descricao, idade, regra, valorInscricao, qtdAtletasBateria, qtdAtletas, qtdOndaSurfada, tempoBateria, sexo, doisSexo, cores } = req.body;
     try {
+      const valor = String(valorInscricao).replaceAll('.','').replace(',','.');
       const categoria = new Categoria({
         idUsuario:idUsuario         ,
         idEvento:idEvento          ,
         descricao:descricao         ,
         idade:idade             ,
         regra :regra             ,
-        valorInscricao:valorInscricao    ,
+        valorInscricao:valor    ,
         qtdAtletasBateria:qtdAtletasBateria ,
         qtdAtletas:qtdAtletas,
         qtdOndaSurfada:qtdOndaSurfada, 
@@ -80,7 +81,23 @@ const categoriaController = {
         cores:cores
       });
       const novaCategoria = await categoria.save();
-
+      if (doisSexo) {
+        await new Categoria({
+          idUsuario:idUsuario         ,
+          idEvento:idEvento          ,
+          descricao:descricao         ,
+          idade:idade             ,
+          regra :regra             ,
+          valorInscricao:valor    ,
+          qtdAtletasBateria:qtdAtletasBateria ,
+          qtdAtletas:qtdAtletas,
+          qtdOndaSurfada:qtdOndaSurfada, 
+          tempoBateria:tempoBateria,
+          atletas:[],
+          sexo:sexo==='Masculino'?'Feminino':'Masculino',
+          cores:cores
+        }).save();
+      }
       //await bateriaController.gerarBaterias(novaCategoria.idEvento, novaCategoria._id, novaCategoria.qtdAtletasBateria, novaCategoria.qtdAtletas);
 
       res.status(201).json(novaCategoria);
@@ -89,7 +106,7 @@ const categoriaController = {
     }
   }, 
 
-  async atualizarCategoria(req, res) {
+  async atualizar(req, res) {
 
     const { id } = req.params;
     const novosDadosCategoria = req.body; // Novos dados do categoria a serem atualizados
@@ -102,7 +119,6 @@ const categoriaController = {
       if (!categoriaExistente) {
         return res.status(404).json({ error: "Categoria não encontrado." });
       }
-
       // Atualize o categoria com os novos dados
       await Categoria.findByIdAndUpdate(id, novosDadosCategoria);
 
@@ -168,7 +184,7 @@ const categoriaController = {
       res.status(500).json({ error: error.message });
     }
   },
-  async categoria(req, res) {
+  async get(req, res) {
     const { id } = req.params;
     try {
       const categoria = await Categoria.findById(id);

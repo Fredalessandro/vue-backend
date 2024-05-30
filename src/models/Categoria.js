@@ -7,7 +7,7 @@ const categoriaSchema = new Schema({
         descricao         : String,
         idade             : Number,
         regra             : String,
-        valorInscricao    : Number,
+        valorInscricao    : String,
         qtdAtletasBateria : Number,
         qtdAtletas        : Number,
         qtdOndaSurfada    : Number,

@@ -2,14 +2,14 @@
 //ßconst WebSocket           = require('ws');
 const categoriaController = require('../categoria/categoriaController.js');
 const usuarioController   = require('../usuario/usuarioController.js');
-const atletaController    = require('../atleta/atletaController.js');
+const athleteController    = require('../athlete/athleteController.js');
 const bateriaController   = require('../bateria/bateriaController.js');
 const DataUtil            = require('../../utils/DataUtil.js');
 const Evento              = require('../../models/Evento.js');
 const Atleta              = require('../../models/Atleta.js');
 //const Usuario             = require('../../models/Usuario.js');
 const Categoria           = require('../../models/Categoria.js');
-const NumberUtil          = require('../../utils/NumberUtil.js');
+//const NumberUtil          = require('../../utils/NumberUtil.js');
 
 
 // Controller para manipular as operações CRUD relacionadas aos eventos
@@ -82,7 +82,7 @@ const eventoController = {
        dataInicio: dataInicio, 
        dataFinal: dataFinal, 
        status: status,
-       valorInscricao: NumberUtil.formatValueMoney(valorInscricao), 
+       valorInscricao: valorInscricao, 
        mediaAtletasCategorias: mediaAtletasCategorias,
        qtdAtletasBateria: qtdAtletasBateria,  
        qtdOndaSurfada: qtdOndaSurfada, 
@@ -181,7 +181,7 @@ const eventoController = {
       res.status(400).json({ error: error.message });
     }
   },
-  async atualizarEvento(req, res) {
+  async atualizar(req, res) {
 
     const { id } = req.params;
     const novosDadosEvento = req.body; // Novos dados do evento a serem atualizados
@@ -206,7 +206,7 @@ const eventoController = {
       res.status(500).json({ error: "Erro ao atualizar evento." });
     }
   },
-  async event(req, res) {
+  async get(req, res) {
     const { id } = req.params;
     try {
       const evento = await Evento.findById(id);
@@ -268,7 +268,7 @@ const eventoController = {
       await Evento.findByIdAndDelete(id);
       await categoriaController.removeRegisters('idEvento',id);
       await bateriaController.removeRegisters('idEvento',id);
-      await atletaController.removeRegisters('idEvento',id);
+      await athleteController.removeRegisters('idEvento',id);
       await usuarioController.removeRegisters('idEvento',id);
       res.json({ success: true, message: "Evento removido com sucesso" });
     } catch (error) {

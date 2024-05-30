@@ -8,7 +8,7 @@ const eventoSchema = new Schema({
         dataInicio: Date,
         dataFinal : Date,
         status    : String,
-        valorInscricao    : Number,
+        valorInscricao    : String,
         qtdAtletasBateria : Number,
         qtdOndaSurfada    : Number,
         mediaAtletasCategorias : Number,

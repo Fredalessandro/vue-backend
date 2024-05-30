@@ -5,7 +5,7 @@ const cors = require('cors');
 const usuarioController = require('./controllers/usuario/usuarioController');
 const categoriaController = require('./controllers/categoria/categoriaController');
 const bateriaController = require('./controllers/bateria/bateriaController');
-const atletaController = require('./controllers/atleta/atletaController');
+const athleteController = require('./controllers/athlete/athleteController');
 const eventoController = require('./controllers/evento/eventoController');
 
 const app = express();
@@ -37,31 +37,31 @@ app.delete('/users/:id',usuarioController.remove);
 
 app.get('/events',            eventoController.getAll);
 app.get('/events/:atributos', eventoController.getByAttribute);
-app.get('/event/:id',    eventoController.event);
+app.get('/event/:id',    eventoController.get);
 app.get('/eventValid/:filtro',    eventoController.eventValid);
 app.post('/events',           eventoController.create);
-app.put('/events/:id',        eventoController.atualizarEvento);
+app.put('/events/:id',        eventoController.atualizar);
 app.delete('/events/:id',     eventoController.remove);
 
 app.get('/categorys',            categoriaController.getAll);
-app.get('/category/:id',    categoriaController.categoria);
+app.get('/category/:id',    categoriaController.get);
 app.get('/categorys/:atributos', categoriaController.getByAttribute);
 app.post('/categorys',           categoriaController.create);
-app.put('/categorys/:id',        categoriaController.atualizarCategoria);
+app.put('/categorys/:id',        categoriaController.atualizar);
 app.delete('/categorys/:id',     categoriaController.remove);
 
 app.get('/baterias',            bateriaController.getAll);
 app.get('/baterias/:atributos', bateriaController.getByAttribute);
 app.post('/baterias',           bateriaController.create);
-app.post('/baterias/gerar',     bateriaController.gerarBaterias);
-app.put('/baterias/:id',        bateriaController.atualizarBateria);
+app.post('/baterias/gerar',     bateriaController.gerar);
+app.put('/baterias/:id',        bateriaController.atualizar);
 app.delete('/baterias/:id',     bateriaController.remove);
 
-app.get('/atletas',             atletaController.getAll);
-app.get('/atletas/:atributos',  atletaController.getByAttribute);
-app.post('/atletas',            atletaController.create);
-app.put('/atletas/:id',         atletaController.atualizarAtleta);
-app.delete('/atletas/:id',      atletaController.remove);
+app.get('/athletes',             athleteController.getAll);
+app.get('/athletes/:atributos',  athleteController.getByAttribute);
+app.post('/athletes',            athleteController.create);
+app.put('/athletes/:id',         athleteController.atualizar);
+app.delete('/athletes/:id',      athleteController.remove);
 
 
 
