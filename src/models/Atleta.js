@@ -4,6 +4,7 @@ const {dbevento} = require('../config/database.js');
 const atletaSchema = new Schema({
        idEvento: String,
        nome    : String,
+       login   : String,
        apelidio: String,
        email   : String,
        telefone: String,
@@ -16,13 +17,14 @@ const atletaSchema = new Schema({
        bairro  : String,
        cidade  : String,
        uf      : String,
+       tipo: String,
+       sexo: String,
        rankNordestino: Number,
        rankEstadual: Number,
        idadeAno: Number,
        cabecaChave: Boolean,
-       profissional: Boolean,
        isento: Boolean,
-       sexo: String
+       ativo: Boolean
 })
   
 const Atleta = dbevento.model('Atleta', atletaSchema);

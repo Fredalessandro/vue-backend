@@ -58,6 +58,8 @@ app.put('/baterias/:id',        bateriaController.atualizar);
 app.delete('/baterias/:id',     bateriaController.remove);
 
 app.get('/athletes',             athleteController.getAll);
+app.get('/athlete/:id',         athleteController.get);
+app.get('/athleteFiltro/:filtro',    athleteController.filtro);
 app.get('/athletes/:atributos',  athleteController.getByAttribute);
 app.post('/athletes',            athleteController.create);
 app.put('/athletes/:id',         athleteController.atualizar);

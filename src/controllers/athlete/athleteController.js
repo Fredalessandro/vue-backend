@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
-const WebSocket = require('ws');
 const Atleta = require('../../models/Atleta.js');
-const DataUtil = require('../../utils/DataUtil.js').default;
+const DataUtil = require('../../utils/DataUtil.js');
 
 
 // Controller para manipular as operações CRUD relacionadas aos atletas
@@ -15,9 +14,41 @@ const athleteController = {
       res.status(500).json({ error: error.message });
     }
   },
+  async get(req, res) {
+    const { id } = req.params;
+    try {
+      const atleta = await Atleta.findById(id);
+      if (atleta) {
+        res.json(atleta);
+      } else {
+        res
+          .status(401)
+          .json({ success: false, message: "Atleta não encontrado." });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  async filtro(req, res) {
+    const { filtro } = req.params;
+    try {
+      const atleta = await Atleta.findOne(JSON.parse(filtro));
+      if (atleta) {
+        res.json(atleta);
+      } else {
+        res
+          .status(401)
+          .json({ success: false, message: "Atleta não encontrado." });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
   async createRegister(
     idEvento,
     nome,
+    login,
+    senha,
     apelidio,
     email,
     telefone,
@@ -35,13 +66,16 @@ const athleteController = {
     idadeAno,
     cabecaChave,
     isento,
-    profissional,
-    sexo
+    tipo,
+    sexo,
+    ativo
   ) {
     try {
       const atleta = new Atleta({
         idEvento,
         nome,
+        login,
+        senha,
         apelidio,
         email,
         telefone,
@@ -59,8 +93,9 @@ const athleteController = {
         idadeAno,
         cabecaChave,
         isento,
-        profissional,
-        sexo
+        tipo,
+        sexo,
+        ativo
       });
       DataUtil.calcularIdade(atleta);
       await atleta.save();
@@ -74,6 +109,8 @@ const athleteController = {
     const {
       idEvento,
       nome,
+      login,
+      senha,
       apelidio,
       email,
       telefone,
@@ -91,14 +128,17 @@ const athleteController = {
       idadeAno,
       cabecaChave,
       isento,
-      profissional,
-      sexo
+      tipo,
+      sexo,
+      ativo
     } = req.body;
     try {
       
       const atleta = new Atleta({
         idEvento,
         nome,
+        login,
+        senha,
         apelidio,
         email,
         telefone,
@@ -116,15 +156,16 @@ const athleteController = {
         idadeAno,
         cabecaChave,
         isento,
-        profissional,
-        sexo
+        tipo,
+        sexo,
+        ativo
       });
       
       DataUtil.calcularIdade(atleta);
 
       const novoAtleta = await atleta.save();
       
-      res.status(201).json(novoAtleta);
+      res.status(200).json(novoAtleta);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -140,7 +181,7 @@ const athleteController = {
       if (!atletaExistente) {
         return res.status(404).json({ error: "Usuário não encontrado." });
       }
-      this.calcularIdade(novosDadosAtleta);
+      DataUtil.calcularIdade(novosDadosAtleta);
       // Atualize o usuário com os novos dados
       await Atleta.findByIdAndUpdate(id, novosDadosAtleta);
 
@@ -165,7 +206,8 @@ const athleteController = {
       });
 
       // Consulte usuários com base no filtro construído
-      let atletas = await Atleta.find(filtro);
+      const opcaoOrdenacao = { nome: 1 };
+      let atletas = await Atleta.find(filtro).sort(opcaoOrdenacao);
 
       // Retorna os usuários encontrados como resposta
       res.json(atletas);

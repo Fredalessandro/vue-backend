@@ -1,8 +1,8 @@
 
 
-class DataUtil {
+const  DataUtil = {
 
-    static ConvertDDMMYYYY(dataOriginal) {
+   ConvertDDMMYYYY(dataOriginal) {
         
         // 2024-04-25
         const ano = dataOriginal.substring(0, 4);//String(data.getDate()).padStart(2, '0');
@@ -11,9 +11,9 @@ class DataUtil {
         
         const dataFormatada = `${dia}/${mes}/${ano}`;
         return dataFormatada;
-    }
+    },
 
-    static calcularIdade(objeto) {
+   calcularIdade(objeto) {
 
         const dataAtual = new Date();
         const anoAtual = dataAtual.getFullYear();
@@ -40,5 +40,4 @@ class DataUtil {
     
       }
 }
-
 module.exports = DataUtil;
