@@ -3,6 +3,8 @@ const express = require('express');
 //const fs = require('fs');
 const cors = require('cors');
 const usuarioController = require('./controllers/usuario/usuarioController');
+const judgeController = require('./controllers/judge/judgeController');
+
 const categoriaController = require('./controllers/categoria/categoriaController');
 const bateriaController = require('./controllers/bateria/bateriaController');
 const athleteController = require('./controllers/athlete/athleteController');
@@ -34,6 +36,14 @@ app.put('/users/:id',   usuarioController.updateUser);
 app.post('/login',      usuarioController.checkLogin);
 app.delete('/users/:id',usuarioController.remove);
 
+app.get('/judges',       judgeController.getAll);
+app.get('/judges/:atributos', judgeController.getByAttribute);
+app.get('/judge/:id',    judgeController.judge);
+app.get('/judgeFiltro/:filtro',    judgeController.judgeFiltro);
+app.post('/judges',      judgeController.create);
+app.put('/judges/:id',   judgeController.updateJudge);
+app.post('/login',      judgeController.checkLogin);
+app.delete('/judges/:id',judgeController.remove);
 
 app.get('/events',            eventoController.getAll);
 app.get('/events/:atributos', eventoController.getByAttribute);

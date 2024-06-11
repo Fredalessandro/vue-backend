@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 const WebSocket = require("ws");
-const Usuario = require("../../models/Usuario.js");
+const Judge = require("../../models/Judge.js");
 
-// Controller para manipular as operações CRUD relacionadas aos usuarios
-const usuarioController = {
-  // Retorna todos os usuarios
+// Controller para manipular as operações CRUD relacionadas aos judges
+const judgeController = {
+  // Retorna todos os judges
   async getAll(req, res) {
     try {
-      const usuarios = await Usuario.find();
-      res.json(usuarios);
+      const judges = await Judge.find();
+      res.json(judges);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -30,7 +30,7 @@ const usuarioController = {
       ativo,
     } = req.body;
     try {
-      const usuario = new Usuario({
+      const judge = new Judge({
         idUsuario,
         idEvento,
         nome,
@@ -45,9 +45,9 @@ const usuarioController = {
         senha,
         ativo,
       });
-      await usuario.save();
+      await judge.save();
 
-      res.status(201).json(usuario);
+      res.status(201).json(judge);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -68,7 +68,7 @@ const usuarioController = {
     ativo
   ) {
     try {
-      const usuario = new Usuario({
+      const judge = new Judge({
         idUsuario,
         idEvento,
         nome,
@@ -83,37 +83,37 @@ const usuarioController = {
         senha,
         ativo,
       });
-      await usuario.save();
+      await judge.save();
 
-      return usuario;
+      return judge;
     } catch (error) {
       throw new Error(error.message);
     }
   },
-  async updateUser(req, res) {
+  async updateJudge(req, res) {
     const { id } = req.params;
-    const novosDadosUsuario = req.body; // Novos dados do usuário a serem atualizados
+    const novosDadosJudge = req.body; // Novos dados do juiz a serem atualizados
 
     try {
-      // Verifique se o usuário com o ID fornecido existe
-      const usuarioExistente = await Usuario.findById(id);
+      // Verifique se o juiz com o ID fornecido existe
+      const judgeExistente = await Judge.findById(id);
 
-      if (!usuarioExistente) {
-        return res.status(404).json({ error: "Usuário não encontrado." });
+      if (!judgeExistente) {
+        return res.status(404).json({ error: "Juiz não encontrado." });
       }
 
-      // Atualize o usuário com os novos dados
-      await Usuario.findByIdAndUpdate(id, novosDadosUsuario);
+      // Atualize o juiz com os novos dados
+      await Judge.findByIdAndUpdate(id, novosDadosJudge);
 
-      // Retorna o usuário atualizado como resposta
-      const usuarioAtualizado = await Usuario.findById(id);
-      res.json(usuarioAtualizado);
+      // Retorna o juiz atualizado como resposta
+      const judgeAtualizado = await Judge.findById(id);
+      res.json(judgeAtualizado);
     } catch (error) {
       // Retorna um erro em caso de falha na atualização
-      res.status(500).json({ error: "Erro ao atualizar usuário." });
+      res.status(500).json({ error: "Erro ao atualizar juiz." });
     }
   },
-  // Retorna um Usuario por atributo
+  // Retorna um Judge por atributo
   async getByAttribute(req, res) {
     const {atributos} = req.params;
 
@@ -125,42 +125,42 @@ const usuarioController = {
         filtro[chave] = valor;
       });*/
 
-      // Consulte usuários com base no filtro construído
-      const usuarios = await Usuario.find(JSON.parse(atributos));
+      // Consulte juizs com base no filtro construído
+      const judges = await Judge.find(JSON.parse(atributos));
 
-      // Retorna os usuários encontrados como resposta
-      res.json(usuarios);
+      // Retorna os juizs encontrados como resposta
+      res.json(judges);
     } catch (error) {
       // Retorna um erro em caso de falha na consulta
-      res.status(500).json({ error: "Erro ao buscar usuários." });
+      res.status(500).json({ error: "Erro ao buscar juizs." });
     }
   },
   // Verifica login e senha
-  async user(req, res) {
+  async judge(req, res) {
     const { id } = req.params;
     try {
-      const usuario = await Usuario.findById(id);
-      if (usuario) {
-        res.json(usuario);
+      const judge = await Judge.findById(id);
+      if (judge) {
+        res.json(judge);
       } else {
         res
           .status(401)
-          .json({ success: false, message: "Usuário não encontrado." });
+          .json({ success: false, message: "Juiz não encontrado." });
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
-  async userFiltro(req, res) {
+  async judgeFiltro(req, res) {
     const { filtro } = req.params;
     try {
-      const usuario = await Usuario.findOne(JSON.parse(filtro));
-      if (usuario) {
-        res.json(usuario);
+      const judge = await Judge.findOne(JSON.parse(filtro));
+      if (judge) {
+        res.json(judge);
       } else {
         res
           .status(401)
-          .json({ success: false, message: "Usuário não encontrado." });
+          .json({ success: false, message: "Juiz não encontrado." });
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -172,54 +172,34 @@ const usuarioController = {
       // Aqui você faria a verificação no banco de dados se o login e senha correspondem a algum registro
       // Este é apenas um exemplo simplificado
       
-      const usuario = await Usuario.find({ login: login, senha: senha });
-      if (usuario.length != 0 && usuario[0].senha === senha) {
-        res.json(usuario[0]);
+      const judge = await Judge.find({ login: login, senha: senha });
+      if (judge.length != 0 && judge[0].senha === senha) {
+        res.json(judge[0]);
       } else {
-        const totalRecord = await Usuario.countDocuments();
-        if (login.toLowerCase()==='afred' && totalRecord === 0) {
-          const usuario = Usuario({
-            idUsuario: null,
-            nome: 'ALESSANDRO',
-            login: 'afred',
-            email: 'fredalessandro@gmail.com',
-            cpf: '621.374.924-15',
-            telefone: '(81)98414-7601',
-            dataNascimento: '1971-10-27',
-            senha: '312831',
-            sexo: 'Masculino',
-            tipo: 'Admin',
-            ativo: true
-          })
-          await usuario.save();
-          res.json(usuario);
-        } else {
           res
           .status(401)
           .json({ success: false, message: "Credenciais inválidas" });
-        }
-
       }
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
-  // Remove um Usuario
+  // Remove um Judge
   async remove(req, res) {
     const { id } = req.params;
     try {
-      await Usuario.findByIdAndDelete(id);
-      res.json({ success: true, message: "Usuario removido com sucesso" });
+      await Judge.findByIdAndDelete(id);
+      res.json({ success: true, message: "Judge removido com sucesso" });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   },
 };
-(usuarioController.removeRegisters = async function (atributo, valor) {
+(judgeController.removeRegisters = async function (atributo, valor) {
   const filtro = { [atributo]: valor };
 
   // Remover registros que correspondem ao filtro
-  await Usuario.deleteMany(filtro)
+  await Judge.deleteMany(filtro)
     .then((result) => {
       console.log(`${result.deletedCount} registros removidos`);
     })
@@ -227,4 +207,4 @@ const usuarioController = {
       console.error("Erro ao remover registros:", err);
     });
 }),
-  (module.exports = usuarioController);
+  (module.exports = judgeController);

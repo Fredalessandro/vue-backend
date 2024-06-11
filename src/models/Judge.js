@@ -1,7 +1,7 @@
 const {Schema} = require("mongoose");
 const {dbevento} = require('../config/database.js');
 
-const usuarioSchema = new Schema({
+const judgeSchema = new Schema({
   idUsuario:String,
   idEvento:String,
   nome: String,
@@ -18,6 +18,6 @@ const usuarioSchema = new Schema({
   ativo: Boolean,
 });
 
-const Usuario = dbevento.model("Usuario", usuarioSchema);
+const Judge = dbevento.model("Judge", judgeSchema);
 
-module.exports = Usuario;
+module.exports = Judge;
