@@ -3,6 +3,7 @@ const WebSocket = require('ws');
 const Categoria = require('../../models/Categoria.js');
 const bateriaController = require('../bateria/bateriaController');
 const Atleta = require('../../models/Atleta.js');
+const DataUtil = require('../../utils/DataUtil.js');
 
 // Controller para manipular as operações CRUD relacionadas aos categorias
 const categoriaController = {
@@ -10,10 +11,10 @@ const categoriaController = {
   async getAll(req, res) {
     try {
       let categorias = await Categoria.find();
-      /*categorias.forEach((categoria) =>{
+      categorias.forEach((categoria) =>{
          const atletas = Atleta.getAll().filter(filter=>categoria.idade<=filter.idadeAno);
          categoria.atletas=atletas
-      })*/
+      })
       res.json(categorias);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -144,7 +145,7 @@ const categoriaController = {
       const opcaoOrdenacao = { descricao: 1 };
       // Consulte categorias com base no filtro construído
       let categorias = await Categoria.find(filtro).sort(opcaoOrdenacao);
-      /*const atletas =  await Atleta.find();
+      const atletas =  await Atleta.find();
 
       const ATE         = 'Até';
       const APARTIR     = 'A partir de';      
@@ -154,6 +155,7 @@ const categoriaController = {
       categorias.forEach((categoria)  =>{
         let selecionado = [];
         atletas.filter(filter=>filter.sexo=categoria.sexo).forEach(atleta=>{
+          DataUtil.calcularIdade(atleta);
           if ((atleta.idadeAno <= categoria.idade) && categoria.regra == ATE && atleta.idEvento==categoria.idEvento) {
               selecionado.push(atleta);
           } else if ((atleta.idadeAno >= categoria.idade) && categoria.regra == APARTIR && atleta.idEvento==categoria.idEvento) {
@@ -166,7 +168,7 @@ const categoriaController = {
         });
         categoria.atletas=selecionado
         //atletas.filter(filter=>(categoria.idade<=filter.idadeAno && filter.idEvento==categoria.idEvento))
-     })*/
+     })
       // Retorna os categorias encontrados como resposta
       res.json(categorias);
     } catch (error) {
