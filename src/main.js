@@ -60,12 +60,13 @@ app.post('/categorys',           categoriaController.create);
 app.put('/categorys/:id',        categoriaController.atualizar);
 app.delete('/categorys/:id',     categoriaController.remove);
 
-app.get('/baterias',            bateriaController.getAll);
-app.get('/baterias/:atributos', bateriaController.getByAttribute);
-app.post('/baterias',           bateriaController.create);
-app.post('/baterias/gerar',     bateriaController.gerar);
-app.put('/baterias/:id',        bateriaController.atualizar);
-app.delete('/baterias/:id',     bateriaController.remove);
+app.get('/batterys',            bateriaController.getAll);
+app.get('/batterys/:atributos', bateriaController.getByAttribute);
+app.post('/batterys',           bateriaController.create);
+app.post('/batterys',           bateriaController.create);
+app.post('/batterys/generate',  bateriaController.generate);
+app.put('/batterys/:id',        bateriaController.atualizar);
+app.delete('/batterys/:id',     bateriaController.remove);
 
 app.get('/athletes',             athleteController.getAll);
 app.get('/athlete/:id',         athleteController.get);

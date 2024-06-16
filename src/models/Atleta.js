@@ -24,7 +24,8 @@ const atletaSchema = new Schema({
        idadeAno: Number,
        cabecaChave: Boolean,
        isento: Boolean,
-       ativo: Boolean
+       ativo: Boolean,
+       confirmado: Boolean
 })
   
 const Atleta = dbevento.model('Atleta', atletaSchema);

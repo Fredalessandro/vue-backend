@@ -32,7 +32,7 @@ const  DataUtil = {
           idade--;
         }
         
-        console.log('Idade ' + idade);
+        //console.log('Idade ' + idade);
         
         objeto.idadeAno = idade;
     

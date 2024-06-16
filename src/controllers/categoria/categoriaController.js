@@ -4,6 +4,7 @@ const Categoria = require('../../models/Categoria.js');
 const bateriaController = require('../bateria/bateriaController');
 const Atleta = require('../../models/Atleta.js');
 const DataUtil = require('../../utils/DataUtil.js');
+const CategoriaAtleta = require('../../models/CategoriaAtleta.js');
 
 // Controller para manipular as operações CRUD relacionadas aos categorias
 const categoriaController = {
@@ -14,6 +15,7 @@ const categoriaController = {
       categorias.forEach((categoria) =>{
          const atletas = Atleta.getAll().filter(filter=>categoria.idade<=filter.idadeAno);
          categoria.atletas=atletas
+         Categoria.save(categoria);
       })
       res.json(categorias);
     } catch (error) {
@@ -165,6 +167,7 @@ const categoriaController = {
           } else if (categoria.regra == OPEN_PRO && atleta.idEvento==categoria.idEvento && atleta.profissional==true) {
               selecionado.push(atleta);
           }
+          
         });
         categoria.atletas=selecionado
         //atletas.filter(filter=>(categoria.idade<=filter.idadeAno && filter.idEvento==categoria.idEvento))
@@ -176,6 +179,35 @@ const categoriaController = {
       res.status(500).json({ error: "Erro ao buscar categorias." });
     }
   },
+  
+  async confirmAtleta(req, res) {
+    const { idAtleta,idCategoria, idEvento, confirmado, pago } = req.params;
+    try {
+      const categoriaAtleta = new CategoriaAtleta({
+        idAtleta: idAtleta,
+        idCategoria: idCategoria,
+        idEvento: idEvento,
+        dataHora: Date.now,
+        confirmado: confirmado,
+        pago: pago
+      })
+      await CategoriaAtleta.save(categoriaAtleta);
+      res.json({ success: true, message: "Atleta confirma na categoria e evento." });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  async removeConfirmAtleta(req, res) {
+    const { id } = req.params;
+    try {
+      await CategoriaAtleta.findByIdAndDelete(id);
+      res.json({ success: true, message: "Confirmação de atleta removido com sucesso." });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
   // Remove um Categoria
   async remove(req, res) {
     const { id } = req.params;

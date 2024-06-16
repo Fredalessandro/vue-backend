@@ -4,7 +4,7 @@ const categoriaController = require('../categoria/categoriaController.js');
 const usuarioController   = require('../usuario/usuarioController.js');
 const athleteController    = require('../athlete/athleteController.js');
 const bateriaController   = require('../bateria/bateriaController.js');
-const DataUtil            = require('../../utils/DataUtil.js').default;
+const DataUtil            = require('../../utils/DataUtil.js');
 const Evento              = require('../../models/Evento.js');
 const Atleta              = require('../../models/Atleta.js');
 //const Usuario             = require('../../models/Usuario.js');
@@ -29,19 +29,19 @@ const eventoController = {
     
     
     const categorias = [    
-        {idEvento:null,descricao:'Até 6',idade:6,regra:'Até',              valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        /*{idEvento:null,descricao:'Até 6',idade:6,regra:'Até',              valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
         {idEvento:null,descricao:'Até 8',idade:8,regra:'Até',              valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
-        {idEvento:null,descricao:'Até 10',idade:10,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
-        {idEvento:null,descricao:'Até 12',idade:12,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
-        {idEvento:null,descricao:'Até 14',idade:14,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
-        {idEvento:null,descricao:'Até 16',idade:16,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
-        {idEvento:null,descricao:'Até 18',idade:18,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
-        {idEvento:null,descricao:'Open Amador',idade:0,regra:'',        valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Até 10',idade:10,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},*/
+        {idEvento:null,descricao:'Sub 12',idade:12,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Sub 14',idade:14,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Sub 16',idade:16,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        {idEvento:null,descricao:'Sub 18',idade:18,regra:'Até',            valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
+        /*{idEvento:null,descricao:'Open Amador',idade:0,regra:'',        valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
         {idEvento:null,descricao:'Open Pro',   idade:0,regra:'',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
         {idEvento:null,descricao:'Master',     idade:35,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
         {idEvento:null,descricao:'GraMaster',  idade:40,regra:'A partir de', valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
         {idEvento:null,descricao:'Karruna',    idade:50,regra:'A partir de',   valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'},
-        {idEvento:null,descricao:'Legend',     idade:55,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'}
+        {idEvento:null,descricao:'Legend',     idade:55,regra:'A partir de',    valorInscricao:50,qtdAtletasBateria:4,qtdAtletas:16,qtdOndaSurfada:10,tempoBateria:30,bateriasGerada:false,sexo:'Masculino'}*/
     ];
 
     /*const usuariosJuizes = [

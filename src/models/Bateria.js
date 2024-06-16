@@ -12,6 +12,7 @@ const bateriaSchema = new Schema({
        seqRound     : Number,
        status       : String,
        avanca       : Number,
+       qtdAtletas   : Number,
        dataHoraInicio    : Date,
        dataHoraFinal     : Date,
        atletas : Array,
