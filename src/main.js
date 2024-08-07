@@ -14,19 +14,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-//startDatabase().catch(console.dir);
-
-/*dbevento.on('error', console.error.bind(console, 'Erro de conexão com o dbevento:'));
-dbevento.once('open', () => {
-  console.log('Conectado ao dbevento.');
-});*/
-
-/*dblns.on('error', console.error.bind(console, 'Erro de conexão com o dblns:'));
-dblns.once('open', () => {
-  console.log('Conectado ao dblns.');
-});*/
-
-
 app.get('/users',       usuarioController.getAll);
 app.get('/users/:atributos', usuarioController.getByAttribute);
 app.get('/user/:id',    usuarioController.user);
