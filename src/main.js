@@ -48,7 +48,7 @@ app.put('/categorys/:id',        categoriaController.atualizar);
 app.delete('/categorys/:id',     categoriaController.remove);
 
 app.get('/batterys',            bateriaController.getAll);
-app.get('/batterys/:atributos', bateriaController.getByAttribute);
+app.get('/batterys/:filtro', bateriaController.getByAttribute);
 app.post('/batterys',           bateriaController.create);
 app.post('/batterys',           bateriaController.create);
 app.post('/batterys/generate',  bateriaController.generate);

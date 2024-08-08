@@ -101,18 +101,18 @@ const bateriaController = {
   },
   // Retorna um Bateria por atributo
   async getByAttribute(req, res) {
-    const atributos = req.params.atributos.split("/");
+    const {filtro} = req.params;
 
     try {
       // Construa um objeto de filtro com base nos atributos fornecidos
-      const filtro = {};
+      /*const filtro = {};
       atributos.forEach((atributo) => {
         const [chave, valor] = atributo.split("=");
         filtro[chave] = valor;
-      });
+      });*/
 
       // Consulte baterias com base no filtro construído
-      const baterias = await Bateria.find(filtro);
+      const baterias = await Bateria.find(JSON.parse(filtro));
 
       // Retorna os baterias encontrados como resposta
       res.json(baterias);
@@ -164,6 +164,8 @@ const bateriaController = {
           let bateria = new Bateria({
             idEvento: idEvento,
             idCategoria: idCategoria,
+            fase : fase.fase,
+            bateria: i,
             sequencia: ++sequencia,
             descricao:
               fase.descricao === "Final" ? `Final` : `${i}ª Bateria`,

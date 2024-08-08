@@ -5,6 +5,8 @@ const bateriaSchema = new Schema({
 
        idEvento     : String,
        idCategoria  : String,
+       fase         : Number,
+       bateria      : Number,
        sequencia    : Number,
        descricao    : String,
        seqBateria   : Number,
