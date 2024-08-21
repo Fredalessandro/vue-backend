@@ -65,7 +65,7 @@ app.delete('/athletes/:id',      athleteController.remove);
 
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 // Configuração do certificado autoassinado
 //console.log(process.cwd());
 //const privateKey = fs.readFileSync(process.cwd()+'/private-key.pem', 'utf8');

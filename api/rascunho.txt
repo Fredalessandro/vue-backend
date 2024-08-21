@@ -166,3 +166,6 @@ Não Chaveado SHAR BOY
           totalBaterias = 0;
         }
       }*/
+
+      br.gov.go.mago.magoutil.util.UtilRecurso.getCaminhoRecurso() + ("jasper/imagens/brasao.png")
+      br.gov.go.mago.magoutil.util.UtilRecurso.getCaminhoRecurso() + ("jasper/imagens/logo.png")
