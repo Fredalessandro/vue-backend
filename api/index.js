@@ -9,10 +9,18 @@ const categoriaController = require('./controllers/categoria/categoriaController
 const bateriaController = require('./controllers/bateria/bateriaController');
 const athleteController = require('./controllers/athlete/athleteController');
 const eventoController = require('./controllers/evento/eventoController');
+const corsOptions = {
+  origin: '*', // Permite apenas esta origem
+  methods: 'GET,POST,PUT,DELETE', // Permite apenas GET e POST
+  allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+  optionsSuccessStatus: 200 // Para compatibilidade com IE11
+};
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+
+app.use(cors(corsOptions));
 
 app.get('/users',       usuarioController.getAll);
 app.get('/users/:atributos', usuarioController.getByAttribute);
