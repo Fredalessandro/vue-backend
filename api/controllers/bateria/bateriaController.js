@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const WebSocket = require('ws');
+//const WebSocket = require('ws');
 const Bateria = require('../../models/Bateria.js');
 const Atleta = require('../../models/Atleta.js');
 const Constante = require('../../utils/Constante.js')

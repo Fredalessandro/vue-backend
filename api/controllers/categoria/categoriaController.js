@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const WebSocket = require('ws');
+//const WebSocket = require('ws');
 const Categoria = require('../../models/Categoria.js');
 const bateriaController = require('../bateria/bateriaController');
 const Atleta = require('../../models/Atleta.js');

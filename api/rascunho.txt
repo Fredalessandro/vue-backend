@@ -169,3 +169,8 @@ Não Chaveado SHAR BOY
 
       br.gov.go.mago.magoutil.util.UtilRecurso.getCaminhoRecurso() + ("jasper/imagens/brasao.png")
       br.gov.go.mago.magoutil.util.UtilRecurso.getCaminhoRecurso() + ("jasper/imagens/logo.png")
+      Estou ciente de que meus dados de telefone e e-mail serão compartilhados no banco de dados do Sistema de Reposição Florestal, para fins de transferência de crédito.
+      Estou ciente de que meus dados de telefone e e-mail serão compartilhados no banco de dados do Sistema de Reposição Florestal, para fins de transferência de crédito.
+
+      Estou ciente de que o órgão ambiental não participa e/ou participará dos procedimentos envolvendo a transferência ou comercialização dos créditos de reposição florestal. Portanto, uma vez transferidos, não haverá nenhum tipo de alteração ou restituição do crédito por parte da SEMAD, ficando essa negociação sob responsabilidade dos negociantes.
+      Estou ciente de que o órgão ambiental não participa e/ou participará dos procedimentos envolvendo a transferência ou comercialização dos créditos de reposição florestal. Portanto, uma vez transferidos, não haverá nenhum tipo de alteração ou restituição do crédito por parte da SEMAD, ficando essa negociação sob responsabilidade dos negociantes.

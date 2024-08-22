@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const WebSocket = require("ws");
+//const WebSocket = require("ws");
 const Usuario = require("../../models/Usuario.js");
 
 // Controller para manipular as operações CRUD relacionadas aos usuarios
