@@ -17,9 +17,12 @@ const bateriaSchema = new Schema({
        qtdAtletas   : Number,
        dataHoraInicio    : Date,
        dataHoraFinal     : Date,
+       finalizada   : Boolean,
        atletas : Array,
+       notas :  Array
    
 })
+const Nota = {idAtleta: String, idJuiz: String, idNota: Number, nota: Number, interencia: Boolean, bloqueio: Boolean}
 
 const Bateria = dbevento.model('Bateria', bateriaSchema);
 

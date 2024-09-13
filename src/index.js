@@ -1,7 +1,8 @@
 const express = require('express');
-//const https = require('https');
-//const fs = require('fs');
+const http = require('http');
+const { Server } = require('socket.io');
 const cors = require('cors');
+
 const usuarioController = require('./controllers/usuario/usuarioController');
 const judgeController = require('./controllers/judge/judgeController');
 
@@ -9,6 +10,7 @@ const categoriaController = require('./controllers/categoria/categoriaController
 const bateriaController = require('./controllers/bateria/bateriaController');
 const athleteController = require('./controllers/athlete/athleteController');
 const eventoController = require('./controllers/evento/eventoController');
+
 const corsOptions = {
   origin: '*', // Permite apenas esta origem
   methods: 'GET,POST,PUT,DELETE', // Permite apenas GET e POST
@@ -17,10 +19,43 @@ const corsOptions = {
 };
 
 const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*', // Permitir todas as origens (substitua por sua origem em produção)
+    methods: ['GET', 'POST'],
+  },
+});
+
+io.on('connection', (socket) => {
+  
+  console.log('Novo cliente conectado:', socket.id);
+
+  // Recebe mensagens de um cliente e retransmite para todos os outros clientes conectados
+  socket.on('sendNotification', (data) => {
+    console.log('Mensagem recebida:', data);
+    socket.broadcast.emit('receiveNotification', data); // Envia para todos, exceto para o emissor
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Cliente desconectado:', socket.id);
+  });
+});
+
+const PORT_SOCKET = process.env.PORT_SOCKET || 3001;
+
+
+server.listen(PORT_SOCKET, () => {
+  console.log(`Servidor socket iniciado na porta ${PORT_SOCKET}.`);
+});
+
+
+
 app.use(express.json());
 
-
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+app.use(cors({ origin: '*' }));
 
 app.get('/users',       usuarioController.getAll);
 app.get('/users/:atributos', usuarioController.getByAttribute);
@@ -37,13 +72,14 @@ app.get('/judge/:id',    judgeController.judge);
 app.get('/judgeFiltro/:filtro',    judgeController.judgeFiltro);
 app.post('/judges',      judgeController.create);
 app.put('/judges/:id',   judgeController.updateJudge);
-app.post('/login',      judgeController.checkLogin);
+app.post('/loginjudge',      judgeController.login);
 app.delete('/judges/:id',judgeController.remove);
 
 app.get('/events',            eventoController.getAll);
 app.get('/events/:atributos', eventoController.getByAttribute);
 app.get('/event/:id',    eventoController.get);
 app.get('/eventValid/:filtro',    eventoController.eventValid);
+app.get('/eventFiltro/:filtro',    eventoController.filtro);
 app.post('/events',           eventoController.create);
 app.put('/events/:id',        eventoController.atualizar);
 app.delete('/events/:id',     eventoController.remove);
@@ -51,6 +87,7 @@ app.delete('/events/:id',     eventoController.remove);
 app.get('/categorys',            categoriaController.getAll);
 app.get('/category/:id',    categoriaController.get);
 app.get('/categorys/:atributos', categoriaController.getByAttribute);
+app.get('/categoryParaSelect/:filtro', categoriaController.getByFiltro);
 app.post('/categorys',           categoriaController.create);
 app.put('/categorys/:id',        categoriaController.atualizar);
 app.delete('/categorys/:id',     categoriaController.remove);
@@ -73,22 +110,9 @@ app.delete('/athletes/:id',      athleteController.remove);
 
 
 
-const PORT = process.env.PORT || 3001;
-// Configuração do certificado autoassinado
-//console.log(process.cwd());
-//const privateKey = fs.readFileSync(process.cwd()+'/private-key.pem', 'utf8');
-//const certificate = fs.readFileSync(process.cwd()+'/certificate.pem', 'utf8');
-//const credentials = { key: privateKey, cert: certificate };
-
-// Criação do servidor HTTPS
-////const httpsServer = https.createServer(credentials, app);
+const PORT = process.env.PORT || 3000;
 
 
-
-// Inicia o servidor HTTPS
-//httpsServer.listen(PORT, () => {
-  //console.log(`Servidor HTTPS rodando na porta ${PORT}`);
-//});
 app.listen(PORT, () => {
   console.log(`Servidor backend iniciado na porta ${PORT}.`);
 });

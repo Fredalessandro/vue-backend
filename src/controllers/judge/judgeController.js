@@ -166,15 +166,15 @@ const judgeController = {
       res.status(500).json({ error: error.message });
     }
   },
-  async checkLogin(req, res) {
+  async login(req, res) {
     const { login, senha } = req.body;
     try {
       // Aqui você faria a verificação no banco de dados se o login e senha correspondem a algum registro
       // Este é apenas um exemplo simplificado
       
-      const judge = await Judge.find({ login: login, senha: senha });
-      if (judge.length != 0 && judge[0].senha === senha) {
-        res.json(judge[0]);
+      const judge = await Judge.findOne({ login: login, senha: senha });
+      if (judge.length != 0 && judge.senha === senha) {
+        res.json(judge);
       } else {
           res
           .status(401)

@@ -174,6 +174,8 @@ const bateriaController = {
             stats: "Aguardando",
             avanca: 2,
             qtdAtletas: fase.atletas,
+            finalizada: false,
+            notas: []
           });
           if (fase.fase==1) {
             bateriaController.addAthletes(atletasMap,bateria);

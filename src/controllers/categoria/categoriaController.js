@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 //const WebSocket = require('ws');
 const Categoria = require('../../models/Categoria.js');
-const bateriaController = require('../bateria/bateriaController');
+const bateriaController = require('../bateria/bateriaController.js');
 const Atleta = require('../../models/Atleta.js');
 const DataUtil = require('../../utils/DataUtil.js');
 const CategoriaAtleta = require('../../models/CategoriaAtleta.js');
+const Bateria = require('../../models/Bateria.js');
 
 // Controller para manipular as operações CRUD relacionadas aos categorias
 const categoriaController = {
@@ -179,7 +180,43 @@ const categoriaController = {
       res.status(500).json({ error: "Erro ao buscar categorias." });
     }
   },
-  
+
+  async getByFiltro(req, res) {
+    const {filtro} = req.params;
+
+    try {
+      // Construa um objeto de filtro com base nos atributos fornecidos
+      /*const filtro = {};
+      atributos.forEach((atributo) => {
+        const [chave, valor] = atributo.split("=");
+        filtro[chave] = valor;
+      });*/
+
+      // Consulte baterias com base no filtro construído
+      const opcaoOrdenacao = { descricao: 1 };
+      const categorias = await Categoria.find(JSON.parse(filtro)).sort(opcaoOrdenacao);
+      const baterias   = await Bateria.find();
+
+      const selectRetorno = [];
+      categorias.forEach(async (categoria)=>{
+          const categoriaId = categoria._id.toString();
+          baterias.sort((a, b) => a.sequencia - b.sequencia).filter(filtro=>filtro.idCategoria === categoriaId).forEach((bateria)=>{
+                const categorias = selectRetorno.filter(filter=>(filter.idCategoria === categoriaId))
+                if (categorias.length === 0 && bateria.finalizada === false) {
+                  selectRetorno.push({idCategoria: categoria._id.toString(),idBateria: bateria._id, descricao: categoria.descricao+" "+ bateria.round+" "+ bateria.descricao, bateria: bateria});
+                }
+                
+          })
+      })
+      // Retorna os baterias encontrados como resposta
+      //console.log(JSON.stringify(selectRetorno))
+      res.json(selectRetorno);
+    } catch (error) {
+      // Retorna um erro em caso de falha na consulta
+      res.status(500).json({ error: "Erro ao buscar categorias." });
+    }
+  },
+
   async confirmAtleta(req, res) {
     const { idAtleta,idCategoria, idEvento, confirmado, pago } = req.params;
     try {

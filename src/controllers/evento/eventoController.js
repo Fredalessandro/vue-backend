@@ -211,6 +211,21 @@ const eventoController = {
     try {
       const evento = await Evento.findById(id);
       if (evento) {
+        return res.json(evento);
+      } else {
+        return res
+          .status(401)
+          .json({ success: false, message: "Evento não encontrado." });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  async filtro(req, res) {
+    const { filtro } = req.params;
+    try {
+      const evento = await Evento.findOne(JSON.parse(filtro));
+      if (evento) {
         res.json(evento);
       } else {
         res
