@@ -121,7 +121,21 @@ const bateriaController = {
       res.status(500).json({ error: "Erro ao buscar baterias." });
     }
   },
-
+  async get(req, res) {
+    const { id } = req.params;
+    try {
+      const bateria = await Bateria.findById(id);
+      if (bateria) {
+        res.json(bateria);
+      } else {
+        res
+          .status(401)
+          .json({ success: false, message: "Bateria não encontrada." });
+      }
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
   // Remove um Bateria
   async remove(req, res) {
     const { id } = req.params;

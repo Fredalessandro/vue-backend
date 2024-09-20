@@ -18,6 +18,7 @@ const bateriaSchema = new Schema({
        dataHoraInicio    : Date,
        dataHoraFinal     : Date,
        finalizada   : Boolean,
+       status: String,
        atletas : Array,
        notas :  Array
    

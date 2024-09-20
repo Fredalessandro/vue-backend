@@ -12,7 +12,7 @@ const athleteController = require('./controllers/athlete/athleteController');
 const eventoController = require('./controllers/evento/eventoController');
 
 const corsOptions = {
-  origin: '*', // Permite apenas esta origem
+  origin: ["http://192.168.1.7:8080", "http://localhost:8088"], // Permite apenas esta origem
   methods: 'GET,POST,PUT,DELETE', // Permite apenas GET e POST
   allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
   optionsSuccessStatus: 200 // Para compatibilidade com IE11
@@ -23,8 +23,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Permitir todas as origens (substitua por sua origem em produção)
-    methods: ['GET', 'POST'],
+    origin: ["http://192.168.1.7:8080", "http://localhost:8088"], // Permitir todas as origens (substitua por sua origem em produção)
+    methods: ['GET', 'POST','PUT','DELETE'],
   },
 });
 
@@ -93,6 +93,7 @@ app.put('/categorys/:id',        categoriaController.atualizar);
 app.delete('/categorys/:id',     categoriaController.remove);
 
 app.get('/batterys',            bateriaController.getAll);
+app.get('/battery/:id',         bateriaController.get);
 app.get('/batterys/:filtro', bateriaController.getByAttribute);
 app.post('/batterys',           bateriaController.create);
 app.post('/batterys',           bateriaController.create);
