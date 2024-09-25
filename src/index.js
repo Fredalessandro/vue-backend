@@ -23,7 +23,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["http://192.168.1.7:8080", "http://localhost:8088"], // Permitir todas as origens (substitua por sua origem em produção)
+    origin: '*', // Permitir todas as origens (substitua por sua origem em produção)
     methods: ['GET', 'POST','PUT','DELETE'],
   },
 });
