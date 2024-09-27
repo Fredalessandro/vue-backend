@@ -95,6 +95,7 @@ app.delete('/categorys/:id',     categoriaController.remove);
 app.get('/batterys',            bateriaController.getAll);
 app.get('/battery/:id',         bateriaController.get);
 app.get('/batterys/:filtro', bateriaController.getByAttribute);
+app.get('/batteryActive', bateriaController.getActive);
 app.post('/batterys',           bateriaController.create);
 app.post('/batterys',           bateriaController.create);
 app.post('/batterys/generate',  bateriaController.generate);

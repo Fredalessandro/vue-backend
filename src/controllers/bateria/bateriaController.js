@@ -121,6 +121,32 @@ const bateriaController = {
       res.status(500).json({ error: "Erro ao buscar baterias." });
     }
   },
+  async getActive(req, res) {
+    const {filtro} = req.params;
+
+    try {
+      // Construa um objeto de filtro com base nos atributos fornecidos
+      /*const filtro = {};
+      atributos.forEach((atributo) => {
+        const [chave, valor] = atributo.split("=");
+        filtro[chave] = valor;
+      });*/
+
+      // Consulte baterias com base no filtro construído
+      const baterias = await Bateria.find({status:'ATIVA'});
+      
+
+// Acessa um elemento específico do array
+      const firstElement = baterias[0]._doc; // { "id": 1, "name": "Alice" }
+
+      
+      // Retorna os baterias encontrados como resposta
+      res.json(firstElement);
+    } catch (error) {
+      // Retorna um erro em caso de falha na consulta
+      res.status(500).json({ error: "Erro ao buscar baterias." });
+    }
+  },
   async get(req, res) {
     const { id } = req.params;
     try {
@@ -185,7 +211,7 @@ const bateriaController = {
               fase.descricao === "Final" ? `Final` : `${i}ª Bateria`,
             seqBateria: i,
             round: fase.descricao,
-            stats: "Aguardando",
+            status: "AGUARDANDO",
             avanca: 2,
             qtdAtletas: fase.atletas,
             finalizada: false,
