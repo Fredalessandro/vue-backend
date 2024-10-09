@@ -22,6 +22,7 @@ const app = express();
 
 const server = http.createServer(app);
 const io = new Server(server, {
+  timeout: 0,
   cors: {
     origin: '*', // Permitir todas as origens (substitua por sua origem em produção)
     methods: ['GET', 'POST','PUT','DELETE'],
@@ -100,6 +101,7 @@ app.post('/batterys',           bateriaController.create);
 app.post('/batterys',           bateriaController.create);
 app.post('/batterys/generate',  bateriaController.generate);
 app.put('/batterys/:id',        bateriaController.atualizar);
+app.put('/batteryScore/:id',    bateriaController.generateScore);
 app.delete('/batterys/:id',     bateriaController.remove);
 
 app.get('/athletes',             athleteController.getAll);

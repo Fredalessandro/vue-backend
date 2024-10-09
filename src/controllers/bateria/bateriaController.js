@@ -2,7 +2,11 @@
 //const WebSocket = require('ws');
 const Bateria = require('../../models/Bateria.js');
 const Atleta = require('../../models/Atleta.js');
-const Constante = require('../../utils/Constante.js')
+const Constante = require('../../utils/Constante.js');
+const Judge = require('../../models/Judge.js');
+const { judge } = require('../judge/judgeController.js');
+const NumberUtil = require('../../utils/NumberUtil.js');
+const { json } = require('express');
 
 // Controller para manipular as operações CRUD relacionadas aos baterias
 const bateriaController = {
@@ -98,6 +102,131 @@ const bateriaController = {
       // Retorna um erro em caso de falha na atualização
       res.status(500).json({ error: "Erro ao atualizar bateria." });
     }
+  },
+  async generateScore(req, res) {
+    try {
+        
+        const { id } = req.params;
+        const object = req.body;
+        const idJuiz = object.idJuiz;
+
+        console.log('Onda selecionada:', object.atleta);
+        console.log("Juiz", idJuiz);
+
+        const atletaRet  = object.atleta;
+        const notaAtleta = object.nota.nota.nota;
+        const notaMinima = object.notaMinima;
+        const notaMaxima = object.notaMaxima;
+        const index = object.index;
+        const bateriaAtiva = JSON.parse(JSON.stringify(object.bateria));
+        
+        bateriaController.setScore(id, index, idJuiz, atletaRet, notaAtleta, bateriaAtiva,0)
+
+        let judgesRobo = [];
+        await Judge.find({robo: true,tipo:'Juiz'}).then((data)=>{
+          judgesRobo = JSON.parse(JSON.stringify(data));
+        });
+        
+        if (judgesRobo.length > 0) {
+          const notasRobo = NumberUtil.generateScoreRandom(judgesRobo.length,notaMinima,notaMaxima);
+          judgesRobo.forEach(async (judgeRobo, idx) => {
+            await bateriaController.setScore(
+              id,
+              index,
+              judgeRobo._id,
+              atletaRet,
+              notasRobo[idx],
+              bateriaAtiva
+            );
+            await Bateria.findByIdAndUpdate(id, bateriaAtiva);
+          });
+        }
+
+        bateriaController.calcScore(id,bateriaAtiva,index,atletaRet);
+
+        const bateriaAtualizado = await Bateria.findById(id);
+        
+        res.json(bateriaAtualizado);
+      } catch (error) {
+        console.log('Erro ao gera notas',error);
+      };
+  },
+
+  async setScore(id, index, idJuiz, atletaRet, notaAtleta, bateriaAtiva){
+    
+    try {
+
+      bateriaAtiva.atletas.forEach((atleta) => {
+        if (atleta._id === atletaRet.idAtleta) {
+          atleta.notas.forEach((nota) => {
+            if (nota.index === index) {
+              nota.notasJuizes
+                .filter((filter) => filter.idJuiz === idJuiz)
+                .forEach(async (notaJuiz) => {
+                  if (
+                    notaJuiz.idJuiz === idJuiz &&
+                    notaJuiz.index === index &&
+                    notaJuiz.lancada != true
+                  ) {
+                    notaJuiz.nota = notaAtleta;
+                    notaJuiz.lancada = true;
+                    
+                    console.log(`Notas Juiz ${notaJuiz.nome}`, notaJuiz.nota);
+                  }
+                });
+            }
+          });
+        }
+      });
+  
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async calcScore(id,bateriaProcessada, index, atletaRet) {
+    const atleta = bateriaProcessada.atletas.filter(filter=>(filter._id===atletaRet.idAtleta))[0];
+    const notas =  atleta.notas;
+    const notaProcessada = notas.filter(nota=>(nota.index === index))[0];
+
+    const notasJuizesProcessada = notaProcessada.notasJuizes.filter(
+      filter => (filter.lancada === true
+    ));
+
+    if (notasJuizesProcessada.length === notaProcessada.notasJuizes.length) {
+      bateriaProcessada.atletas.forEach((atleta) => {
+        
+        if (atleta._id === atletaRet.idAtleta) {
+          
+          atleta.notas.forEach(async (nota) => {
+            
+            if (nota.index === index) {
+
+              notasJuizesProcessada
+                .sort((a, b) => b.nota - a.nota) // Ordena as notas de forma decrescente
+                .forEach((lancada) => {
+                  //console.log(`Notas Juiz ${lancada.nome}`, lancada.nota);
+                  // Exibe o valor da nota
+                });
+
+              const notaFinal =
+                (parseFloat(notasJuizesProcessada[0].nota) +
+                  parseFloat(notasJuizesProcessada[1].nota) +
+                  parseFloat(notasJuizesProcessada[2].nota) +
+                  parseFloat(notasJuizesProcessada[3].nota)) /
+                4;
+
+              let notaSomada = Number(notaFinal.toFixed(2));
+
+              console.log(`Nota somada`, notaSomada);
+              nota.notaSomada = notaSomada;
+              await Bateria.findByIdAndUpdate(id, bateriaProcessada);
+            }
+          });
+        }
+      });
+    }  
+
+      
   },
   // Retorna um Bateria por atributo
   async getByAttribute(req, res) {
@@ -260,6 +389,7 @@ bateriaController.addAthletes = function(atletasMap, bateria) {
   }
   bateria.atletas = elements;
 };
+
 bateriaController.removeRegisters = async function(atributo, valor) {
 
     const filtro = { [atributo]: valor };

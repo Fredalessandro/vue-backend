@@ -16,6 +16,7 @@ const judgeSchema = new Schema({
   perfil: String,
   senha: String,
   ativo: Boolean,
+  robo: Boolean,
 });
 
 const Judge = dbevento.model("Judge", judgeSchema);
