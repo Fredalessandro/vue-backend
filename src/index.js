@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
 
   // Recebe mensagens de um cliente e retransmite para todos os outros clientes conectados
   socket.on('sendNotification', (data) => {
-    console.log('Mensagem recebida:', data);
+    //console.log('Mensagem recebida:', data);
     socket.broadcast.emit('receiveNotification', data); // Envia para todos, exceto para o emissor
   });
 

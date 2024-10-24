@@ -27,7 +27,8 @@ const atletaSchema = new Schema({
        ativo: Boolean,
        confirmado: Boolean,
        colocacao: Number,
-       cor: String
+       cor: String,
+       index: Number
  
 })
   

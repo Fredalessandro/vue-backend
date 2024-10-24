@@ -209,17 +209,23 @@ const bateriaController = {
                 });
 
               const notaFinal =
-                (parseFloat(notasJuizesProcessada[0].nota) +
-                  parseFloat(notasJuizesProcessada[1].nota) +
+                ( parseFloat(notasJuizesProcessada[1].nota) +
                   parseFloat(notasJuizesProcessada[2].nota) +
                   parseFloat(notasJuizesProcessada[3].nota)) /
-                4;
+                3;
 
               let notaSomada = Number(notaFinal.toFixed(2));
 
               console.log(`Nota somada`, notaSomada);
               nota.notaSomada = notaSomada;
+              notasJuizesProcessada
+              .sort((a, b) => a.index - b.index) // Retorna a  ordenação normal
+              .forEach((lancada) => {
+                //console.log(`Notas Juiz ${lancada.nome}`, lancada.nota);
+                // Exibe o valor da nota
+              });
               await Bateria.findByIdAndUpdate(id, bateriaProcessada);
+              bateriaController.updateAll(id,bateriaProcessada);
             }
           });
         }
@@ -228,6 +234,58 @@ const bateriaController = {
 
       
   },
+  async updateAll(id,bateria) {
+      /*        atleta.colocacao= 0;
+        atleta.notaUm   = 0;
+        atleta.notaDoi  = 0;
+        atleta.total    = 0;
+        atleta.bloqueio = 0;
+        atleta.interf1  = 0;
+        atleta.interf2  = 0;
+        atleta.notaAvanca=0;*/
+      
+      // Atualiza melhores notas
+      bateria.atletas.forEach((atleta)=>{
+            if (atleta.notas) {
+              const maioresNotas = atleta.notas.sort((a, b) => b.notaSomada - a.notaSomada);
+              if (maioresNotas.length > 0) {
+                atleta.notaUm = maioresNotas[0].notaSomada;
+                if (maioresNotas.length > 1) {
+                  atleta.notaDois = maioresNotas[1].notaSomada;
+                }
+                atleta.total = atleta.notaUm + atleta.notaDois;
+              }
+            }  
+      })
+
+      // Atualiza colocacao
+      bateria.atletas.sort((a, b) => b.total - a.total).forEach((atleta,index)=>atleta.total===0?atleta.colocacao=0:atleta.colocacao=index+1);
+      let atletaAnterio;
+      const atletas = bateria.atletas.sort((a, b) => a.colocacao - b.colocacao);
+      bateria.atletas
+        .sort((a, b) => a.colocacao - b.colocacao) // Ordena por colocação do menor para o maior
+        .forEach((atleta, index, atletas) => {
+          if (index > 0) {
+            // Pula o primeiro, já que não há ninguém à frente
+            const atletaAnterior = atletas[index - 1];
+            let valorNota = 0;
+            if (atleta.notaDois>0) {
+              valorNota = atleta.notaDois;
+            } else if (atleta.notaUm>0) {
+              valorNota = atleta.notaUm;
+            }
+            let diferencaPontos = atletaAnterior.total - atleta.total;
+
+            atleta.notaAvanca = diferencaPontos+(valorNota+1);
+            console.log(
+              `Atleta ${atleta.nome} precisa de mais ${diferencaPontos} pontos para passar o atleta ${atletaAnterior.nome}`
+            );
+          }
+        });
+        bateria.atletas.sort((a,b)=>a.index-b.index);
+        await Bateria.findByIdAndUpdate(id, bateria);
+
+  },  
   // Retorna um Bateria por atributo
   async getByAttribute(req, res) {
     const {filtro} = req.params;
@@ -321,7 +379,16 @@ const bateriaController = {
         [atletas[i], atletas[j]] = [atletas[j], atletas[i]];
       }
       let atletasMap = new Map();
-      atletas.forEach((atleta) => {
+      atletas.forEach((atleta,index) => {
+        atleta.colocacao= 0;
+        atleta.notaUm   = 0;
+        atleta.notaDois = 0;
+        atleta.total    = 0;
+        atleta.bloqueio = 0;
+        atleta.interf1  = 0;
+        atleta.interf2  = 0;
+        atleta.notaAvanca=0;
+        atleta.index=index;
         atletasMap.set(atleta._id,atleta);
       });
       const formato = Constante.formatos[qtdAtletas];
