@@ -265,24 +265,42 @@ const bateriaController = {
       bateria.atletas
         .sort((a, b) => a.colocacao - b.colocacao) // Ordena por colocação do menor para o maior
         .forEach((atleta, index, atletas) => {
-          if (index > 0) {
+          
+          if (atleta.colocacao != 1) {
             // Pula o primeiro, já que não há ninguém à frente
-            const atletaAnterior = atletas[index - 1];
-            let valorNota = 0;
-            if (atleta.notaDois>0) {
-              valorNota = atleta.notaDois;
-            } else if (atleta.notaUm>0) {
-              valorNota = atleta.notaUm;
+            let atletaAnterior = null;
+            
+            if (atleta.colocacao===0) {
+              const maxColocacao = atletas.reduce((max, find) => 
+                find.colocacao > max ? find.colocacao : max, 0);
+              atletaAnterior = atletas.filter(filter=>filter.colocacao === maxColocacao)[0];
+            } else {
+              atletaAnterior = atletas.filter(filter=>filter.colocacao === atleta.colocacao - 1)[0];
             }
-            let diferencaPontos = atletaAnterior.total - atleta.total;
 
-            atleta.notaAvanca = diferencaPontos+(valorNota+1);
-            console.log(
-              `Atleta ${atleta.nome} precisa de mais ${diferencaPontos} pontos para passar o atleta ${atletaAnterior.nome}`
-            );
+            if (atletaAnterior) {
+              let diferencaPontos = 0; 
+              if (atleta.notaUm>0) {
+                diferencaPontos = atletaAnterior.total - atleta.notaUm;
+              } else {
+                diferencaPontos = atletaAnterior.total;
+              }
+              atleta.notaAvanca = diferencaPontos+0.01;
+              console.log(
+                `Atleta ${atleta.nome} precisa de ${atleta.notaAvanca} pontos para passar o atleta ${atletaAnterior.nome}`
+              );
+            }
+
           }
         });
-        bateria.atletas.sort((a,b)=>a.index-b.index);
+        // Volta a ordenação dos atletas e lançamento das notas 
+        // por atleta para não refletir na exibição no frontend. 
+        bateria.atletas.sort((a,b)=>a.index-b.index).forEach(atleta => {
+          if (atletas.notas) {
+            atleta.notas.sort((a, b) => b.index - a.index);
+          }  
+        })
+        //bateria.atletas.sort((a,b)=>a.index-b.index);
         await Bateria.findByIdAndUpdate(id, bateria);
 
   },  
@@ -384,9 +402,10 @@ const bateriaController = {
         atleta.notaUm   = 0;
         atleta.notaDois = 0;
         atleta.total    = 0;
-        atleta.bloqueio = 0;
-        atleta.interf1  = 0;
-        atleta.interf2  = 0;
+        atleta.desclass = false;
+        atleta.inter1   = 0;
+        atleta.inter2   = 0;
+        atleta.inter3   = 0;
         atleta.notaAvanca=0;
         atleta.index=index;
         atletasMap.set(atleta._id,atleta);
